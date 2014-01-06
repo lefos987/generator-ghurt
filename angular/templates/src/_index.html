@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+		<title>Digital Dashboard</title>
+		<link rel="icon" type="image/ico" href="src/assets/img/favicon.png"/>
+		<link rel="apple-touch-icon" sizes="57x57" href="src/assets/img/apple-icon-57x57.png"/>
+		<link rel="apple-touch-icon" sizes="72x72" href="src/assets/img/apple-icon-72x72.png"/>
+		<link rel="apple-touch-icon" sizes="114x114" href="src/assets/img/apple-icon-114x114.png"/>
+		<link rel="apple-touch-icon" sizes="144x144" href="src/assets/img/apple-icon-144x144.png"/>
+		<!-- build:css dist/app.min.css -->
+		<link rel="stylesheet" type="text/css" href="dist/app.css" media="screen, projector, print">
+		<link rel="stylesheet" type="text/css" href="src/assets/fonts/sedFont/fonts.css" media="screen, projector, print">
+    <link rel="stylesheet" type="text/css" href="src/assets/fonts/helveticaFont/fonts.css" media="screen, projector, print">
+    <link rel="stylesheet" type="text/css" href="src/assets/fonts/gillSansRegular/fonts.css" media="screen, projector, print">
+    <link rel="stylesheet" type="text/css" href="src/assets/fonts/gillSansLight/fonts.css" media="screen, projector, print">
+    <!-- endbuild -->
+		<script src="vendor/modernizr/custom.modernizr.js"></script>
+	</head>
+
+	<body>
+		
+		<% if (_hasNgDepend('angular-route')) { %>
+		<!-- ng-view for main content -->
+		<div class="row wrapper" ng-view=""></div>
+		<% } else { %>
+		<!-- ng-include for main controller -->
+		<ng-include src="./src/app/app.view.html"></ng-include>
+		<% } %>
+
+		<!-------------------------------- Scripts --------------------------------------------->
+
+		<!----------------------------  Vendor Scripts  ---------------------------------------->
+		<script type="text/javascript" src="vendor/angular/angular.min.js"></script>
+		<% _.each(ngDependencies.ngDepend, function(dep){ 
+		%><script type="text/javascript" src="<%= _ngDepend[dep].scriptDir %>"></script>
+		<% }); %>
+		<% _.each(extDependencies.extDepend, function(dep) { 
+		%><script type="text/javascript" src="<%= _extDepend[dep].scriptDir %>"></script>
+		<% }); %>
+
+		<!----------------------------  Application Script  ------------------------------------>
+		<!-- build:js dist/app.min.js -->
+		<script type="text/javascript" src="dist/app.js"></script>
+		<!-- endbuild -->
+	</body>
+</html>

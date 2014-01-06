@@ -1,0 +1,9 @@
+.DS_Store
+.idea
+*.log
+.sass-cache/
+coverage/
+dist/
+node_modules/
+vendor/**/
+src/styles/css/

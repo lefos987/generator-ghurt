@@ -1,0 +1,8 @@
+{
+  "name": "<%= basicInfo.name %>",
+  "version": "<%= basicInfo.version %>",
+  "dependencies": <%= JSON.stringify(bowerDependencies, null, '\t\t')%>,
+  "devDependencies": {
+    "angular-mocks": "<%= ngDependencies.ngVersion %>"
+  }
+}
