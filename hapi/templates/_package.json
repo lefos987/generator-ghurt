@@ -1,0 +1,26 @@
+{
+  "name": "<%= basicInfo.name %>",
+  "version": "<%= basicInfo.version %>",
+  "description": "<%= basicInfo.description %>",
+  "author": "<%= basicInfo.author %>",
+  "licenses": "<%= basicInfo.license %>",
+  <% if (basicInfo.repo !== '') { %>"repository": {
+    "type": "git",
+    "url": "<%= basincInfo.repo %>"
+  },
+  <% } %>"dependencies": <%= JSON.stringify(npmDependencies, null, '\t\t')%>,
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-githooks": "~0.3.0",
+    "grunt-jasmine-node": "~0.1.0",
+    "grunt-jasmine-node-coverage": "~0.1.6",
+    "grunt-jasmine-node-coverage-validation": "0.0.4",
+    "grunt-contrib-watch": "~0.4.4",
+    "istanbul": "~0.1.44",
+    "load-grunt-tasks": "~0.2.0",
+    "rewire": "~1.1.3",
+    "sinon": "~1.7.2",
+    "supervisor": "~0.5.2"
+  }
+}

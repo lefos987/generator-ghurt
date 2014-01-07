@@ -34,7 +34,7 @@ var common = {
 			return true;
 		}
 		else {
-			return 'Please enter a valid version number in the format of X.Y.Z (X,Y,Z are integers)';
+			return 'Please enter a valid version number (X.Y.Z)';
 		}
 	},
 
