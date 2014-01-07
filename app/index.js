@@ -5,46 +5,80 @@ var yeoman = require('yeoman-generator');
 
 
 var CapinnovationGenerator = module.exports = function CapinnovationGenerator(args, options, config) {
-  yeoman.generators.Base.apply(this, arguments);
+	yeoman.generators.Base.apply(this, arguments);
 
-  this.on('end', function () {
-    this.installDependencies({ skipInstall: options['skip-install'] });
-  });
+	this.on('end', function() {
+		
+	});
 
-  this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
+	this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 };
 
 util.inherits(CapinnovationGenerator, yeoman.generators.Base);
 
-CapinnovationGenerator.prototype.askFor = function askFor() {
-  var cb = this.async();
-
-  // have Yeoman greet the user.
-  console.log(this.yeoman);
-
-  var prompts = [{
-    type: 'confirm',
-    name: 'someOption',
-    message: 'Would you like to enable this option?',
-    default: true
-  }];
-
-  this.prompt(prompts, function (props) {
-    this.someOption = props.someOption;
-
-    cb();
-  }.bind(this));
+CapinnovationGenerator.prototype.welcome = function welcome() {
+	if (!this.options['skip-welcome-message']) {
+		console.log(this.yeoman);
+	}
 };
 
-CapinnovationGenerator.prototype.app = function app() {
-  this.mkdir('app');
-  this.mkdir('app/templates');
+CapinnovationGenerator.prototype.askBasic = function askBasic() {
 
-  this.copy('_package.json', 'package.json');
-  this.copy('_bower.json', 'bower.json');
+	var cb = this.async();
+	var choices = [{
+			name: 'Client app?',
+			value: 'client'
+		}, {
+			name: 'Server app?',
+			value: 'server'
+		}, {
+			name: 'Server and Client app?',
+			value: 'both'
+		}
+	];
+
+	var prompts = [{
+		type: 'list',
+		name: 'appType',
+		message: 'Are you creating a: ',
+		choices: choices
+	}];
+
+	this.prompt(prompts, function (props) {
+		this.basicInfo = props;
+		cb();
+	}.bind(this));
 };
 
-CapinnovationGenerator.prototype.projectfiles = function projectfiles() {
-  this.copy('editorconfig', '.editorconfig');
-  this.copy('jshintrc', '.jshintrc');
+CapinnovationGenerator.prototype.createStructure = function createStructure() {
+	switch (this.basicInfo.appType) {
+	case 'client' :
+		this.invoke('capinnovation:angular');
+		break;
+	case 'server' :
+		this.invoke('capinnovation:hapi');
+		break;
+	case 'both' :
+		this.mkdir('client');
+		this.spawnCommand('cd', ['client']);
+		this.invoke('capinnovation:angular', {}, function () {
+			this.spawnCommand('cd', ['..']);
+			this.mkdir('server');
+			this.spawnCommand('cd', ['server']);
+			this.invoke('capinnovation:hapi');
+		});
+		break;
+	}
+
+
+	// case 'both' :
+	// 	this.mkdir('server');
+	// 	this.spawnCommand('cd', ['server']);
+	// 	this.spawnCommand('yo', ['capinnovation:hapi', '--skip-welcome-message']);
+	// 	this.spawnCommand('cd', ['..']);
+	// 	this.mkdir('client');
+	// 	this.spawnCommand('cd', ['client']);
+	// 	this.spawnCommand('yo', ['capinnovation:angular', '--skip-welcome-message']);
+	// 	break;
+	// }
 };
