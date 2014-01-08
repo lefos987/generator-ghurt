@@ -1,0 +1,2 @@
+# <%=basicInfo.name %>
+Welcome!

@@ -65,7 +65,7 @@ var generatorData = {
 			version: '0.0.1',
 			author: 'Capgemini Innovation',
 			repo: '',
-			licence: '',
+			license: '',
 			serverPort: 50000,
 			quickInstall: false
 		},

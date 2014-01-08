@@ -8,14 +8,9 @@ var common = require('../common/common.js');
 
 var NgcapGenerator = module.exports = function NgcapGenerator(args, options, config) {
 	yeoman.generators.Base.apply(this, arguments);
-	this.on('end', function () {
-		this.installDependencies({
-			skipInstall: options['skip-install'],
-			callback: function () {
-				this.spawnCommand('grunt', ['githooks']);
-			}.bind(this)
-		});
-	});
+	this.options = options;
+	//Commented out as a placeholder for possible future use
+	//this.on('end', function () {});
 
 	this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 };
@@ -72,6 +67,9 @@ NgcapGenerator.prototype.welcome = function welcome() {
 	if (!this.options['skip-welcome-message']) {
 		console.log(this.yeoman);
 	}
+	else {
+		console.log('--------------- Let\'s configure your client application -------------');
+	}
 
 	// Setup default config
 	this.basicInfo = generatorData.defaultConfig.basicInfo;
@@ -85,11 +83,6 @@ NgcapGenerator.prototype.askBasic = function askBasic() {
 	var cb = this.async();
 	console.log('We need some information about your app to automagically create it...');
 	var prompts = [{
-		type: 'input',
-		name: 'name',
-		message: 'What is the name?',
-		validate: common.checkRequired
-	}, {
 		type: 'input',
 		name: 'description',
 		message: 'Can you give us a brief description?',
@@ -112,8 +105,8 @@ NgcapGenerator.prototype.askBasic = function askBasic() {
 		default: this.basicInfo.repo
 	}, {
 		type: 'list',
-		name: 'licence',
-		message: 'Under which licence is it created?',
+		name: 'license',
+		message: 'Under which license is it created?',
 		choices: ['BSD', 'MIT', 'Apache', 'Other']
 	}, {
 		type: 'input',
@@ -128,8 +121,20 @@ NgcapGenerator.prototype.askBasic = function askBasic() {
 		default: this.basicInfo.quickInstall
 	}];
 
+	if (!this.options.appName) {
+		prompts.unshift({
+			type: 'input',
+			name: 'name',
+			message: 'What is the name of your application?',
+			validate: common.checkRequired
+		});
+	}
+
 	this.prompt(prompts, function (props) {
 		this.basicInfo = props;
+		if (this.options.appName) {
+			this.basicInfo.name = this.options.appName;
+		}
 		cb();
 	}.bind(this));
 
@@ -314,6 +319,12 @@ NgcapGenerator.prototype.vendorFilesInit = function vendorFilesInit() {
 	this.template('vendor/_bower.json', 'vendor/bower.json');
 };
 
-NgcapGenerator.prototype.initGit = function initGit() {
-	this.spawnCommand('git', ['init']);
+NgcapGenerator.prototype.installDeps = function installDeps() {
+	var cb = this.async();
+	this.installDependencies({
+		skipInstall: this.options['skip-install'],
+		callback: function () {
+			cb();
+		}
+	});
 };
