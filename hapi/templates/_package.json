@@ -4,16 +4,16 @@
   "description": "<%= basicInfo.description %>",
   "author": "<%= basicInfo.author %>",
   "licenses": "<%= basicInfo.license %>",
-  <% if (basicInfo.repo !== '') { %>"repository": {
+  "repository": {
     "type": "git",
-    "url": "<%= basincInfo.repo %>"
+    "pathPrefix": "<%= basicInfo.pathPrefix %>"<% if (basicInfo.repo !== '') { %>,
+    "url": "<%= basincInfo.repo %>"<% } %>
   },
-  <% } %>"dependencies": <%= JSON.stringify(npmDependencies, null, '\t\t')%>,
+  "dependencies": <%= JSON.stringify(npmDependencies, null, '\t\t')%>,
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-watch": "~0.4.4",
-    "grunt-githooks": "~0.3.0",
     "grunt-jasmine-node": "~0.1.0",
     "grunt-jasmine-node-coverage": "~0.1.6",
     "grunt-jasmine-node-coverage-validation": "0.0.4",

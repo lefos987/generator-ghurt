@@ -76,39 +76,22 @@ NgcapGenerator.prototype.welcome = function welcome() {
 	this.ngDependencies = generatorData.defaultConfig.ngDependencies;
 	this.extDependencies = generatorData.defaultConfig.extDependencies;
 	this.fdnSettings = generatorData.defaultConfig.fdnSettings;
+
+	// Setup data from potential master generator
+	if (!!this.options.basicInfo) {
+		this.basicInfo = common.merge(this.basicInfo, this.options.basicInfo);
+	}
+
+	console.log('my basicInfo', this.basicInfo);
 };
 
-NgcapGenerator.prototype.askBasic = function askBasic() {
+NgcapGenerator.prototype.askBasic = common.askBasic;
+
+NgcapGenerator.prototype.askGeneral = function askGeneral() {
 
 	var cb = this.async();
 	console.log('We need some information about your app to automagically create it...');
 	var prompts = [{
-		type: 'input',
-		name: 'description',
-		message: 'Can you give us a brief description?',
-		default: this.basicInfo.description
-	}, {
-		type: 'input',
-		name: 'version',
-		message: 'What version is it on?',
-		default: this.basicInfo.version,
-		validate: common.checkProjectVersion
-	}, {
-		type: 'input',
-		name: 'author',
-		message: 'Who is the author?',
-		default: this.basicInfo.author
-	}, {
-		type: 'input',
-		name: 'repo',
-		message: 'What is the GitHub/Stash repo?',
-		default: this.basicInfo.repo
-	}, {
-		type: 'list',
-		name: 'license',
-		message: 'Under which license is it created?',
-		choices: ['BSD', 'MIT', 'Apache', 'Other']
-	}, {
 		type: 'input',
 		name: 'connectServerPort',
 		message: 'What\'s the connect server port?',
@@ -121,23 +104,10 @@ NgcapGenerator.prototype.askBasic = function askBasic() {
 		default: this.basicInfo.quickInstall
 	}];
 
-	if (!this.options.appName) {
-		prompts.unshift({
-			type: 'input',
-			name: 'name',
-			message: 'What is the name of your application?',
-			validate: common.checkRequired
-		});
-	}
-
 	this.prompt(prompts, function (props) {
-		this.basicInfo = props;
-		if (this.options.appName) {
-			this.basicInfo.name = this.options.appName;
-		}
+		this.basicInfo = common.merge(this.basicInfo, props);
 		cb();
 	}.bind(this));
-
 };
 
 NgcapGenerator.prototype.askNgDependencies = function askNgDependencies() {
@@ -290,7 +260,7 @@ NgcapGenerator.prototype.createStructure = function createStructure() {
 NgcapGenerator.prototype.rootFilesInit = function rootFilesInit() {
 	this.template('_package.json', 'package.json');
 	this.template('jshintrc', '.jshintrc');
-	this.copy('_gruntFile.js', 'gruntFile.js');
+	this.copy('gruntFile.js', 'gruntFile.js');
 	this.copy('bowerrc', '.bowerrc');
 	this.copy('.gitignore', '.gitignore');
 };

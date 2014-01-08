@@ -40,6 +40,11 @@ HapiGenerator.prototype.welcome = function welcome() {
 	this.basicInfo = generatorData.defaultConfig.basicInfo;
 	this.hapiDependencies = generatorData.defaultConfig.hapiDependencies;
 	this.extDependencies = generatorData.defaultConfig.extDependencies;
+
+	// Setup data from potential master generator
+	if (!!this.options.basicInfo) {
+		this.basicInfo = common.merge(this.basicInfo, this.options.basicInfo);
+	}
 };
 
 HapiGenerator.prototype.askBasic = function askBasic() {
@@ -47,32 +52,6 @@ HapiGenerator.prototype.askBasic = function askBasic() {
 	var cb = this.async();
 	console.log('We need some information about your app to automagically create it...');
 	var prompts = [{
-		type: 'input',
-		name: 'description',
-		message: 'Can you give us a brief description?',
-		default: this.basicInfo.description
-	}, {
-		type: 'input',
-		name: 'version',
-		message: 'What version is it on?',
-		default: this.basicInfo.version,
-		validate: common.checkProjectVersion
-	}, {
-		type: 'input',
-		name: 'author',
-		message: 'Who is the author?',
-		default: this.basicInfo.author
-	}, {
-		type: 'input',
-		name: 'repo',
-		message: 'What is the GitHub/Stash repo?',
-		default: this.basicInfo.repo
-	}, {
-		type: 'list',
-		name: 'license',
-		message: 'Under which license is it created?',
-		choices: ['BSD', 'MIT', 'Apache', 'Other']
-	}, {
 		type: 'input',
 		name: 'serverPort',
 		message: 'Which port do you want your server to run on?',
@@ -85,23 +64,10 @@ HapiGenerator.prototype.askBasic = function askBasic() {
 		default: this.basicInfo.quickInstall
 	}];
 
-	if (!this.options.appName) {
-		prompts.unshift({
-			type: 'input',
-			name: 'name',
-			message: 'What is the name of your application?',
-			validate: common.checkRequired
-		});
-	}
-
 	this.prompt(prompts, function (props) {
-		this.basicInfo = props;
-		if (this.options.appName) {
-			this.basicInfo.name = this.options.appName;
-		}
+		this.basicInfo = common.merge(this.basicInfo, props);
 		cb();
 	}.bind(this));
-
 };
 
 

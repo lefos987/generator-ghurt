@@ -3,8 +3,8 @@
 /*global module*/
 
 module.exports = function (grunt) {
-
 	require('load-grunt-tasks')(grunt);
+	var pkg = grunt.file.readJSON('package.json');
 
 	// Project configuration.
 	grunt.initConfig({
@@ -43,12 +43,6 @@ module.exports = function (grunt) {
 					useDotNotation: true,
 					consolidate: true
 				}
-			}
-		},
-		githooks: {
-			all: {
-				// Will run the build task at every commit
-				'pre-commit': 'build'
 			}
 		},
 		ngdocs: {

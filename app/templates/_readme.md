@@ -1,7 +1,7 @@
 # <%=basicInfo.name %>
-## <%=packageInfo.description %>
+## <%=basicInfo.description %>
 ### Version
-<%=packageInfo.version %>
+<%=basicInfo.version %>
 
 ### License
-[<%=packageInfo.licenses %>]
+[<%=basicInfo.license %>]

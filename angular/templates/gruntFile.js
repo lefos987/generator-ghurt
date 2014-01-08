@@ -107,11 +107,6 @@ module.exports = function (grunt) {
 				dir: 'coverage'
 			}
 		},
-		githooks: {
-			all: {
-				'pre-commit': 'build'
-			}
-		},
 		jshint: {
 			options: {
 				jshintrc: '.jshintrc'

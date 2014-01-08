@@ -1,0 +1,26 @@
+#!/bin/sh
+
+<% function hooksTemplate (directory, rootPath) { 
+if (directory !== '') {%>cd <%=directory%><% } %>
+
+if grunt build
+then
+  echo 'Success'
+else
+  echo 'You broke the build'
+  say -v "Vicki" "You broke the build"
+  exit 1
+fi
+
+<% if (directory !== '') {%>cd ..<% } %>
+<% } %>
+
+<%
+if (basicInfo.installType === 'both') {
+	hooksTemplate('client', destinationRoot());
+	hooksTemplate('server', destinationRoot());
+}
+else {
+	hooksTemplate('', destinationRoot());
+}
+%>

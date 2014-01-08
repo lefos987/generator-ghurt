@@ -5,11 +5,12 @@
   "author": "<%= basicInfo.author %>",
   "licenses": "<%= basicInfo.license %>",
   "connectServerPort": <%= basicInfo.connectServerPort %>,
-  <% if (basicInfo.repo !== '') { %>"repository": {
+  "repository": {
     "type": "git",
-    "url": "<%= basincInfo.repo %>"
+    "pathPrefix": "<%= basicInfo.pathPrefix %>"<% if (basicInfo.repo !== '') { %>,
+    "url": "<%= basincInfo.repo %>"<% } %>
   },
-  <% } %>"dependencies": {},
+  "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-cssmin": "~0.6.1",
@@ -41,7 +42,6 @@
     "karma-ng-html2js-preprocessor": "~0.1.0",
     "karma-coverage": "~0.1.0",
     "load-grunt-tasks": "~0.2.0",
-    "phantomas": "~0.11.1",
-    "grunt-githooks": "~0.3.1"
+    "phantomas": "~0.11.1"
   }
 }

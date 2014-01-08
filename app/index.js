@@ -4,24 +4,35 @@ var path = require('path');
 var yeoman = require('yeoman-generator');
 var Q = require('q');
 var common = require('../common/common');
+var generatorData = require('./data');
 
 var CapinnovationGenerator = module.exports = function CapinnovationGenerator(args, options, config) {
 	yeoman.generators.Base.apply(this, arguments);
-	//Commented out as a placeholder for possible future use
+	
+	// Commented out as a placeholder for possible future use
 	// this.on('end', function() {});
-	this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 };
 
 util.inherits(CapinnovationGenerator, yeoman.generators.Base);
+
+
+/**
+ * Public methods / install script
+ * ------------------------------------------------------------------
+ */
 
 CapinnovationGenerator.prototype.welcome = function welcome() {
 	if (!this.options['skip-welcome-message']) {
 		console.log(this.yeoman);
 	}
+
+	// Set default data
+	this.basicInfo = generatorData.defaultConfig.basicInfo;
 };
 
-CapinnovationGenerator.prototype.askBasic = function askBasic() {
+CapinnovationGenerator.prototype.askBasic = common.askBasic;
 
+CapinnovationGenerator.prototype.askInstallType = function askInstallType() {
 	var cb = this.async();
 	var choices = [{
 			name: 'Client app?',
@@ -36,11 +47,6 @@ CapinnovationGenerator.prototype.askBasic = function askBasic() {
 	];
 
 	var prompts = [{
-		type: 'input',
-		name: 'name',
-		message: 'What is the name of your app?',
-		validate: common.checkRequired
-	}, {
 		type: 'list',
 		name: 'type',
 		message: 'Are you creating a: ',
@@ -48,24 +54,22 @@ CapinnovationGenerator.prototype.askBasic = function askBasic() {
 	}];
 
 	this.prompt(prompts, function (props) {
-		this.basicInfo = props;
+		this.basicInfo.installType = props.type;
 		cb();
 	}.bind(this));
 };
 
 CapinnovationGenerator.prototype.createStructure = function createStructure() {
 	var cb = this.async();
-	var appInfo = {
-		appName: this.basicInfo.name
-	};
-	switch (this.basicInfo.type) {
+	var basicInfo;
+	switch (this.basicInfo.installType) {
 	case 'client' :
-		this._createClient('angular', appInfo).finally(function () {
+		this._createClient('angular', this.basicInfo).finally(function () {
 			cb();
 		});
 		break;
 	case 'server' :
-		this._createServer('hapi', appInfo).finally(function () {
+		this._createServer('hapi', this.basicInfo).finally(function () {
 			cb();
 		});
 		break;
@@ -74,11 +78,19 @@ CapinnovationGenerator.prototype.createStructure = function createStructure() {
 		this.mkdir('server');
 
 		this.destinationRoot('client');
-		appInfo.appName = this.basicInfo.name + '_client';
-		this._createClient('angular', appInfo).finally(function () {
+		basicInfo = common.merge(this.basicInfo, {
+			name: this.basicInfo.name + '_client',
+			pathPrefix: '../'
+		});
+		this._createClient('angular', basicInfo).finally(function () {
+
 			this.destinationRoot('../server');
-			appInfo.appName = this.basicInfo.name + '_server';
-			this._createServer('hapi', appInfo).then(function () {
+			basicInfo = common.merge(this.basicInfo, {
+				name: this.basicInfo.name + '_server',
+				pathPrefix: '../'
+			});
+			this._createServer('hapi', basicInfo).then(function () {
+
 				this.destinationRoot('..');
 				cb();
 			}.bind(this));
@@ -88,18 +100,26 @@ CapinnovationGenerator.prototype.createStructure = function createStructure() {
 };
 
 CapinnovationGenerator.prototype.addReadme = function addReadme() {
-	console.log('tadsaasd');
-	this.packageInfo = this.dest.readJSON((this.basicInfo.type === 'both') ?
-	'client/package.json' : 'package.json');
-	console.log('asdsad ', this.packageInfo);
 	this.template('_readme.md', 'README.md');
 };
 
-CapinnovationGenerator.prototype._createClient = function _createClient(client, appInfo) {
+CapinnovationGenerator.prototype.gitConfig = function gitConfig() {
+	this.spawnCommand('git', ['init']);
+	this.template('_pre-commit', '.git/hooks/pre-commit');
+	this.spawnCommand('chmod', ['755', '.git/hooks/pre-commit']);
+};
+
+
+/**
+ * Private methods
+ * ------------------------------------------------------------------
+ */
+
+CapinnovationGenerator.prototype._createClient = function _createClient(client, basicInfo) {
 	var deferred = Q.defer();
 	var options = {
 		'skip-welcome-message': true,
-		appName: appInfo.appName
+		basicInfo: basicInfo
 	};
 	this.invoke('capinnovation:' + client, {options: options}, function () {
 		deferred.resolve();
@@ -107,11 +127,11 @@ CapinnovationGenerator.prototype._createClient = function _createClient(client, 
 	return deferred.promise;
 };
 
-CapinnovationGenerator.prototype._createServer = function _createServer(server, appInfo) {
+CapinnovationGenerator.prototype._createServer = function _createServer(server, basicInfo) {
 	var deferred = Q.defer();
 	var options = {
 		'skip-welcome-message': true,
-		appName: appInfo.appName
+		basicInfo: basicInfo
 	};
 	this.invoke('capinnovation:' + server, {options: options}, function () {
 		deferred.resolve();
