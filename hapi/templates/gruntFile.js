@@ -18,7 +18,7 @@ module.exports = function (grunt) {
 				jshintrc: '.jshintrc'
 			}
 		},
-		jasmine_node: {
+		'jasmine_node': {
 			coverage: {
 				options : {
 					failTask: true,
@@ -50,6 +50,12 @@ module.exports = function (grunt) {
 				// Will run the build task at every commit
 				'pre-commit': 'build'
 			}
+		},
+		ngdocs: {
+			options: {
+				html5Mode: false
+			},
+			all: ['src/**/*.js']
 		}
 	});
 

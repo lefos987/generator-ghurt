@@ -128,6 +128,12 @@ module.exports = function (grunt) {
 				singleRun: true
 			}
 		},
+		ngdocs: {
+			options: {
+				html5Mode: false
+			},
+			all: ['<%= src.js %>']
+		},
 		uglify: {
 			options: {
 				banner: '<%= banner %>',
