@@ -53,10 +53,6 @@ CapinnovationGenerator.prototype.askBasic = function askBasic() {
 	}.bind(this));
 };
 
-CapinnovationGenerator.prototype.addReadme = function addReadme() {
-	this.template('_readme.md', 'README.md');
-};
-
 CapinnovationGenerator.prototype.createStructure = function createStructure() {
 	var cb = this.async();
 	var appInfo = {
@@ -83,11 +79,20 @@ CapinnovationGenerator.prototype.createStructure = function createStructure() {
 			this.destinationRoot('../server');
 			appInfo.appName = this.basicInfo.name + '_server';
 			this._createServer('hapi', appInfo).then(function () {
+				this.destinationRoot('..');
 				cb();
-			});
+			}.bind(this));
 		}.bind(this));
 		break;
 	}
+};
+
+CapinnovationGenerator.prototype.addReadme = function addReadme() {
+	console.log('tadsaasd');
+	this.packageInfo = this.dest.readJSON((this.basicInfo.type === 'both') ?
+	'client/package.json' : 'package.json');
+	console.log('asdsad ', this.packageInfo);
+	this.template('_readme.md', 'README.md');
 };
 
 CapinnovationGenerator.prototype._createClient = function _createClient(client, appInfo) {
