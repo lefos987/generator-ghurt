@@ -157,13 +157,9 @@ module.exports = function (grunt) {
 					hostname: '*',
 					base: 'dist',
 					keepalive: true,
-					livereload: true
+					livereload: true,
+					open: true
 				}
-			}
-		},
-		open: {
-			server: {
-				path: 'http://localhost:<%= connect.server.options.port %>'
 			}
 		},
 		plato: {
@@ -201,7 +197,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('test', ['clean:other', 'karma:build', 'coverage']);
 
 	grunt.registerTask('develop', ['clean', 'compass', 'copy:assets', 'concat', 'jshint',
-		'karma:unit', 'open', 'watch']);
+		'karma:unit', 'watch']);
 
 	grunt.registerTask('server', ['connect:server']);
 
