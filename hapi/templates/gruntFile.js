@@ -69,7 +69,7 @@ module.exports = function (grunt) {
 		grunt.log.subhead(Date());
 	});
 
-	grunt.registerTask('supervise', function () {
+	grunt.registerTask('server', function () {
 		this.async();
 		require('supervisor').run(['server.js']);
 	});
