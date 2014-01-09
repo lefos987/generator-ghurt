@@ -50,7 +50,14 @@ module.exports = function (grunt) {
 				html5Mode: false
 			},
 			all: ['src/**/*.js']
-		}
+		},
+		plato: {
+			scripts: {
+				files: {
+					'report/output/directory': ['src/**/*.js', 'test/**/*.js']
+				}
+			}
+		},
 	});
 
 	// Default task.

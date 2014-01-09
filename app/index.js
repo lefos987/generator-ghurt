@@ -105,8 +105,13 @@ CapinnovationGenerator.prototype.addReadme = function addReadme() {
 
 CapinnovationGenerator.prototype.gitConfig = function gitConfig() {
 	this.spawnCommand('git', ['init']);
-	this.template('_pre-commit', '.git/hooks/pre-commit');
-	this.spawnCommand('chmod', ['755', '.git/hooks/pre-commit']);
+	this.template('gitHooks/_pre-commit', '.git/hooks/pre-commit');
+	this.template('gitHooks/_post-merge', '.git/hooks/post-merge');
+	this.copy('gitHooks/pre-push', '.git/hooks/pre-push');
+};
+
+CapinnovationGenerator.prototype.gitHookRights = function gitHookRights() {
+	this.spawnCommand('chmod', ['-R', '755', '.git/hooks']);
 };
 
 

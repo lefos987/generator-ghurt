@@ -166,6 +166,13 @@ module.exports = function (grunt) {
 				path: 'http://localhost:<%= connect.server.options.port %>'
 			}
 		},
+		plato: {
+			scripts: {
+				files: {
+					'report/output/directory': ['<%= src.js %>', '<%= src.specs %>']
+				}
+			}
+		},
 		watch: {
 			options: {
 				livereload: '<%= connect.server.options.livereload %>'

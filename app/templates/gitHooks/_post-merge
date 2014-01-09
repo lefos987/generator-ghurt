@@ -1,0 +1,17 @@
+#!/bin/sh
+
+<% function hooksTemplate (directory, rootPath) { 
+if (directory !== '') {%>cd <%=directory%><% } %>
+npm ls
+<% if (directory !== '') {%>cd ..<% } %>
+<% } %>
+
+<%
+if (basicInfo.installType === 'both') {
+	hooksTemplate('client', destinationRoot());
+	hooksTemplate('server', destinationRoot());
+}
+else {
+	hooksTemplate('', destinationRoot());
+}
+%>

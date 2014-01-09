@@ -81,8 +81,6 @@ NgcapGenerator.prototype.welcome = function welcome() {
 	if (!!this.options.basicInfo) {
 		this.basicInfo = common.merge(this.basicInfo, this.options.basicInfo);
 	}
-
-	console.log('my basicInfo', this.basicInfo);
 };
 
 NgcapGenerator.prototype.askBasic = common.askBasic;
