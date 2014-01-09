@@ -10,13 +10,14 @@ module.exports = function(config) {
 		files: [
 			<%
 			var configFiles = [
-				"'vendor/angular/angular.min.js'",
+				"'dist/vendor/angular/angular.min.js'",
+				"'dist/vendor/angular-mocks/angular-mocks.min.js'",
 				"'src/**/*.js'",
 				"'test/unit/**/*.spec.js'"
 			];
 			configFiles = configFiles.concat(
-				_.map(ngDependencies.ngDepend, function(dep){return "'" + _ngDepend[dep].scriptDir + "'";}),
-				_.map(extDependencies.extDepend, function(dep){return "'" + _extDepend[dep].scriptDir + "'";})); 
+				_.map(ngDependencies.ngDepend, function(dep){return "'dist/" + _ngDepend[dep].scriptDir + "'";}),
+				_.map(extDependencies.extDepend, function(dep){return "'dist/" + _extDepend[dep].scriptDir + "'";})); 
 			%>
 			<%= configFiles.join(',\r\t\t\t') %>
 		],

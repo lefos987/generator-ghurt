@@ -242,9 +242,6 @@ NgcapGenerator.prototype.createStructure = function createStructure() {
 	this.mkdir('src');
 	this.mkdir('src/app');
 	this.mkdir('src/app/common');
-	this.mkdir('src/assets');
-	this.mkdir('src/assets/img');
-	this.mkdir('src/assets/fonts');
 	this.mkdir('src/styles');
 	this.mkdir('src/styles/scss');
 	this.mkdir('test');
@@ -252,7 +249,11 @@ NgcapGenerator.prototype.createStructure = function createStructure() {
 	this.mkdir('test/unit');
 	this.mkdir('test/unit/app');
 	this.mkdir('test/e2e');
-	this.mkdir('vendor');
+	this.mkdir('dist');
+	this.mkdir('dist/vendor');
+	this.mkdir('dist/assets');
+	this.mkdir('dist/assets/img');
+	this.mkdir('dist/assets/fonts');
 };
 
 NgcapGenerator.prototype.rootFilesInit = function rootFilesInit() {
@@ -284,7 +285,7 @@ NgcapGenerator.prototype.testFolderInit = function testFolderInit() {
 };
 
 NgcapGenerator.prototype.vendorFilesInit = function vendorFilesInit() {
-	this.template('vendor/_bower.json', 'vendor/bower.json');
+	this.template('vendor/_bower.json', 'dist/vendor/bower.json');
 };
 
 NgcapGenerator.prototype.installDeps = function installDeps() {

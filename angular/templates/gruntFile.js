@@ -29,9 +29,6 @@ module.exports = function (grunt) {
 			}
 		},
 		clean: {
-			develop: {
-				src: ['<%= distDir %>']
-			},
 			css: {
 				src: '<%= distDir %>/app.css'
 			},
@@ -81,21 +78,6 @@ module.exports = function (grunt) {
 				dest: '<%= distDir %>/app.css'
 			}
 		},
-		copy: {
-			assets: {
-				files: [{
-					dest: '<%= distDir %>/fonts',
-					src: '**',
-					expand: true,
-					cwd: 'src/assets/fonts/**/*.[otf, svg, ttf, woff]'
-				}, {
-					dest: '<%= distDir %>/img',
-					src: '**',
-					expand: true,
-					cwd: 'src/assets/img/'
-				}]
-			}
-		},
 		coverage: {
 			options: {
 				thresholds: {
@@ -107,9 +89,22 @@ module.exports = function (grunt) {
 				dir: 'coverage'
 			}
 		},
+		html2js: {
+			options: {
+				module: 'templates',
+				quoteChar: '\'',
+				indentString: '	',
+				useStrict: true
+			},
+			main: {
+				src: 'src/**/*.view.html',
+				dest: 'src/app/templates.js'
+			}
+		},
 		jshint: {
 			options: {
-				jshintrc: '.jshintrc'
+				jshintrc: '.jshintrc',
+				ignores: ['src/app/templates.js']
 			},
 			files: ['gruntFile.js', '<%= src.js %>', '<%= src.specs %>']
 		},
@@ -196,12 +191,12 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('test', ['clean:other', 'karma:build', 'coverage']);
 
-	grunt.registerTask('develop', ['clean', 'compass', 'copy:assets', 'concat', 'jshint',
+	grunt.registerTask('develop', ['clean', 'compass', 'html2js', 'concat', 'jshint',
 		'karma:unit', 'watch']);
 
 	grunt.registerTask('server', ['connect:server']);
 
-	grunt.registerTask('build', ['clean', 'compass', 'jshint', 'useminPrepare', 'copy:assets',
-		'concat', 'cssmin', 'uglify', 'usemin', 'karma:build', 'coverage']);
+	grunt.registerTask('build', ['clean', 'compass', 'jshint', 'useminPrepare',
+		'html2js',	'concat', 'cssmin', 'uglify', 'usemin', 'karma:build', 'coverage']);
 
 };

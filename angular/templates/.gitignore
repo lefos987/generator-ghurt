@@ -3,7 +3,6 @@
 *.log
 .sass-cache/
 coverage/
-dist/
+dist/vendor/**/
 node_modules/
-vendor/**/
 src/styles/css/
