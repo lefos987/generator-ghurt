@@ -1,11 +1,15 @@
 'use strict';
 
 module.exports = function (grunt) {
+	// NPM module that loads all tasks of type grunt-
 	require('load-grunt-tasks')(grunt);
 	var pkg = grunt.file.readJSON('package.json');
 
 	grunt.initConfig({
-
+		/**
+		 * Basic info of our app
+		 * ###########################################################
+		 */
 		pkg: pkg,
 		banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' + ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>;\n' + ' * Licensed <%= pkg.licenses %>\n */\n',
 		distDir: 'dist',
@@ -16,18 +20,22 @@ module.exports = function (grunt) {
 			css: ['src/styles/css/**/*.css'],
 			html: ['src/**/*.html']
 		},
-		cssmin: {
-			options: {
-				banner: '<%= banner %>'
-			},
-			minify: {
-				expand: true,
-				cwd: '<%= distDir %>/',
-				src: ['*.css', '!*.min.css'],
-				dest: '<%= distDir %>/',
-				ext: '.min.css'
-			}
-		},
+
+		/**
+		 * Build Tasks
+		 * ###########################################################
+		 */
+		
+		/**
+		 * General tasks
+		 * ------------------------------------------------------------------
+		 */
+		
+		/**
+		 * clean
+		 * Delete any unnecessary files from dist folder
+		 * Also delete any generated directories (like coverage, .sass-cache)
+		 */
 		clean: {
 			css: {
 				src: '<%= distDir %>/app.css'
@@ -45,18 +53,10 @@ module.exports = function (grunt) {
 				src: 'coverage'
 			}
 		},
-		compass: {
-			dev: {
-				options: {
-					config: 'src/styles/config.rb'
-				}
-			},
-			clean: {
-				options: {
-					clean: true
-				}
-			}
-		},
+		/**
+		 * concat
+		 * Concatenate all js files into one and all css files into one.
+		 */
 		concat: {
 			options: {
 				stripBanners: true,
@@ -78,17 +78,75 @@ module.exports = function (grunt) {
 				dest: '<%= distDir %>/app.css'
 			}
 		},
-		coverage: {
+		/**
+		 * useminPrepare
+		 * Find the tagged blocks in index.html in order to be replaced
+		 * with their minified versions in the usemin task
+		 */
+		useminPrepare: {
+			html: '<%= distDir %>/index.html'
+		},
+		/**
+		 * usemin
+		 * Replace the references of non-minified files tagged in the useminPrepare task
+		 * with their minified versions
+		 */
+		usemin: {
+			html: ['<%= distDir %>/**/*.html'],
+			css: ['<%= distDir %>/**/*.css'],
 			options: {
-				thresholds: {
-					statements: 90,
-					branches: 100,
-					functions: 90,
-					lines: 90
-				},
-				dir: 'coverage'
+				basedir: '../',
+				dirs: ['<%= distDir %>']
 			}
 		},
+
+		/**
+		 * CSS tasks
+		 * ------------------------------------------------------------------
+		 */
+		
+		/**
+		 * compass
+		 * Compiles SCSS files into CSS files
+		 */
+		compass: {
+			dev: {
+				options: {
+					config: 'src/styles/config.rb'
+				}
+			},
+			clean: {
+				options: {
+					clean: true
+				}
+			}
+		},
+		/**
+		 * cssmin
+		 * Minifies the concatenated file of css in the dist folder
+		 */
+		cssmin: {
+			options: {
+				banner: '<%= banner %>'
+			},
+			minify: {
+				expand: true,
+				cwd: '<%= distDir %>/',
+				src: ['*.css', '!*.min.css'],
+				dest: '<%= distDir %>/',
+				ext: '.min.css'
+			}
+		},
+
+		/**
+		 * JS tasks
+		 * ------------------------------------------------------------------
+		 */
+		
+		/**
+		 * html2js
+		 * Convert angular partial html templates into a js module
+		 */
 		html2js: {
 			options: {
 				module: 'templates',
@@ -101,6 +159,10 @@ module.exports = function (grunt) {
 				dest: 'src/app/templates.js'
 			}
 		},
+		/**
+		 * jshint
+		 * Apply lint rules into the js code
+		 */
 		jshint: {
 			options: {
 				jshintrc: '.jshintrc',
@@ -108,6 +170,10 @@ module.exports = function (grunt) {
 			},
 			files: ['gruntFile.js', '<%= src.js %>', '<%= src.specs %>']
 		},
+		/**
+		 * karma
+		 * Use karma test runner to run unit tests for angular
+		 */
 		karma: {
 			unit: {
 				configFile: 'test/config/karma.conf.js',
@@ -118,12 +184,10 @@ module.exports = function (grunt) {
 				singleRun: true
 			}
 		},
-		ngdocs: {
-			options: {
-				html5Mode: false
-			},
-			all: ['<%= src.js %>']
-		},
+		/**
+		 * uglify
+		 * Minify concatenated js file of dist directory
+		 */
 		uglify: {
 			options: {
 				banner: '<%= banner %>',
@@ -134,17 +198,59 @@ module.exports = function (grunt) {
 				dest: '<%= distDir %>/app.min.js'
 			}
 		},
-		useminPrepare: {
-			html: '<%= distDir %>/index.html'
-		},
-		usemin: {
-			html: ['<%= distDir %>/**/*.html'],
-			css: ['<%= distDir %>/**/*.css'],
+
+		/**
+		 * Reports and Docs
+		 * ------------------------------------------------------------------
+		 */
+		
+		/**
+		 * coverage
+		 * Creates test coverage report and validates against pre-set thresholds
+		 */
+		coverage: {
 			options: {
-				basedir: '../',
-				dirs: ['<%= distDir %>']
+				thresholds: {
+					statements: 90,
+					branches: 100,
+					functions: 90,
+					lines: 90
+				},
+				dir: 'coverage'
 			}
 		},
+		/**
+		 * ngdocs
+		 * Generates documentation from comments according to the Angular way
+		 * (based on jsDoc)
+		 */
+		ngdocs: {
+			options: {
+				html5Mode: false
+			},
+			all: ['<%= src.js %>']
+		},
+		/**
+		 * plato
+		 * Use plato util to generate static analysis report for our code
+		 */
+		plato: {
+			scripts: {
+				files: {
+					'report/output/directory': ['<%= src.js %>', '<%= src.specs %>']
+				}
+			}
+		},
+
+		/**
+		 * LiveReload Tasks
+		 * ###########################################################
+		 */
+		
+		/**
+		 * connect
+		 * Use connect middleware to set up a web server for livereload
+		 */
 		connect: {
 			server: {
 				options: {
@@ -157,13 +263,12 @@ module.exports = function (grunt) {
 				}
 			}
 		},
-		plato: {
-			scripts: {
-				files: {
-					'report/output/directory': ['<%= src.js %>', '<%= src.specs %>']
-				}
-			}
-		},
+		/**
+		 * watch
+		 * Watch the files for any change and apply the corresponding grunt task
+		 * according to the type of the file.
+		 * Example, if a scss file changes run compass and clean(to remove .sass-cache)
+		 */
 		watch: {
 			options: {
 				livereload: '<%= connect.server.options.livereload %>'
@@ -187,16 +292,41 @@ module.exports = function (grunt) {
 		}
 	});
 
-	grunt.registerTask('default', ['jshint', 'watch']);
+	/**
+	 * Our Tasks
+	 * ###########################################################
+	 */
 
-	grunt.registerTask('test', ['clean:other', 'karma:build', 'coverage']);
+	grunt.registerTask('develop', [
+		'clean',
+		'compass',
+		'html2js',
+		'concat',
+		'jshint',
+		'karma:unit',
+		'watch'
+	]);
 
-	grunt.registerTask('develop', ['clean', 'compass', 'html2js', 'concat', 'jshint',
-		'karma:unit', 'watch']);
+	grunt.registerTask('test', [
+		'clean:other',
+		'karma:build',
+		'coverage'
+	]);
 
 	grunt.registerTask('server', ['connect:server']);
 
-	grunt.registerTask('build', ['clean', 'compass', 'jshint', 'useminPrepare',
-		'html2js',	'concat', 'cssmin', 'uglify', 'usemin', 'karma:build', 'coverage']);
+	grunt.registerTask('build', [
+		'clean',
+		'compass',
+		'jshint',
+		'useminPrepare',
+		'html2js',
+		'concat',
+		'cssmin',
+		'uglify',
+		'usemin',
+		'karma:build',
+		'coverage'
+	]);
 
 };
