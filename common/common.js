@@ -11,8 +11,7 @@ var common = {
  * @return	boolean/string
  */
 	checkVersion: function (version) {
-		version = version.toLowerCase();
-		var pass = version.match(/^[0-9]+(\.[0-9]+)+$/);
+		var pass = /^\~?[0-9]+(\.[0-9]+)\.(([0-9]+)|(x))$/.test(version);
 		if (pass || (version === 'latest')) {
 			return true;
 		}
@@ -30,7 +29,7 @@ var common = {
 	 * @return	boolean/string
 	 */
 	checkProjectVersion: function (version) {
-		if (version.match(/^[0-9]+\.[0-9]+\.[0-9]+$/)) {
+		if (/^[0-9]+\.[0-9]+\.[0-9]+$/.test(version)) {
 			return true;
 		}
 		else {
@@ -76,13 +75,16 @@ var common = {
 	 * Merge
 	 * merge two object and return it
 	 * 
-	 * @param obj1
-	 * @param obj2
-	 * @returns obj3 a new object based on obj1 and obj2
+	 * @param objA
+	 * @param objB
+	 * @returns objMerged: a new object based on objA and objB
 	 */
-	merge: function (obj1, obj2) {
-		for (var attrname in obj2) { obj1[attrname] = obj2[attrname]; }
-		return obj1;
+	merge: function (objA, objB) {
+		var attrname;
+		var objMerged = {};
+		for (attrname in objA) { objMerged[attrname] = objA[attrname]; }
+		for (attrname in objB) { objMerged[attrname] = objB[attrname]; }
+		return objMerged;
 	},
 
 	/**
