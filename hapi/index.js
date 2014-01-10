@@ -171,6 +171,7 @@ HapiGenerator.prototype.rootFilesInit = function rootFilesInit() {
 
 HapiGenerator.prototype.srcFolderInit = function srcFolderInit() {
 	this.copy('src/indexRoutes.js', 'src/api/index/indexRoutes.js');
+	this.copy('src/en_GB.json', 'src/error_messages/en_GB.json');
 };
 
 HapiGenerator.prototype.installDeps = function installDeps() {

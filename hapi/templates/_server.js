@@ -18,7 +18,7 @@ var Flod = require('flod');
 var probe = new Flod.Probe(server, {server: 'hapi', version: '<%= npmDependencies.hapi%>'});
 <%}%>
 
-server.addRoutes(indexRoutes);
+server.route(indexRoutes);
 
 server.start();
 console.log('Hapi server running in port ' + config.port);
