@@ -97,7 +97,6 @@ var common = {
 
 		// Escape if the basicInfo is already set
 		if (!!this.basicInfo._set) {
-			console.log('too bad bitches');
 			return;
 		}
 		

@@ -23,8 +23,8 @@ util.inherits(CapinnovationGenerator, yeoman.generators.Base);
 
 /**
  * welcome
- * method that prints a welcome message when the generator starts
- * and initializes any default configuration
+ * 
+ * Say hello and setup the default data
  */
 CapinnovationGenerator.prototype.welcome = function welcome() {
 	if (!this.options['skip-welcome-message']) {
@@ -37,13 +37,19 @@ CapinnovationGenerator.prototype.welcome = function welcome() {
 
 /**
  * askBasic
- * method that calls the common askBasic method to get information about the app
+ * 
+ * Generate the prompt to ask the basic information
+ * and set the result in this.basicInfo
+ * This method is common to all generators 
+ * The default basicInfo data is set in the welcome method
  */
 CapinnovationGenerator.prototype.askBasic = common.askBasic;
 
 /**
  * askInstallItype
- * method that asks what kind of app we need to install (client and/or server)
+ * 
+ * Ask what kind of app we need to install (client and/or server)
+ * then add it to basicInfo
  */
 CapinnovationGenerator.prototype.askInstallType = function askInstallType() {
 	var cb = this.async();
@@ -74,10 +80,12 @@ CapinnovationGenerator.prototype.askInstallType = function askInstallType() {
 
 /**
  * createStructure
- * method that creates the base folder structure for our app and runs the correct subgenerator
+ * 
+ * Creates the base folder structure for our app and run the correct subgenerator
  * 1. if we have a client or server app then files are put on the root of the app and then either
  *		angular or hapi subgenerators are run.
- * 2. if we have both a client and a server app then it creates client and server
+ * 2. if we have both a client and a server app then it creates client and server and then runs
+ * the corresponding subgenerator
  *		subdirectories
  * In both cases it attaches a README file to the root.
  * #TODO: 
@@ -129,7 +137,8 @@ CapinnovationGenerator.prototype.createStructure = function createStructure() {
 
 /**
  * addReaadme
- * method that attaches the README.md file to the root of the project
+ * 
+ * Attach the README.md file to the root of the project
  */
 CapinnovationGenerator.prototype.addReadme = function addReadme() {
 	this.template('_readme.md', 'README.md');
@@ -137,9 +146,10 @@ CapinnovationGenerator.prototype.addReadme = function addReadme() {
 
 /**
  * gitConfig
- * method that applies a bisc git configuration to the root directory of the app
+ * 
+ * Apply a bisc git configuration to the root directory of the app
  * 1. git init to initialize a git repo
- * 2. coppy the pre-commit and pre-push git hooks in order to ensure quality of the code
+ * 2. copy the pre-commit and pre-push git hooks in order to ensure quality of the code
  * before code is pushed.
  */
 CapinnovationGenerator.prototype.gitConfig = function gitConfig() {
@@ -150,7 +160,8 @@ CapinnovationGenerator.prototype.gitConfig = function gitConfig() {
 
 /**
  * gitHooksRights
- * method that makes the git hooks that we just copied executable.
+ * 
+ * Make the git hooks that we just copied executable.
  * #NOTE: Created as a separate method to ensure that it will run synchronously after the
  * files are copied
  */
@@ -167,7 +178,7 @@ CapinnovationGenerator.prototype.gitHookRights = function gitHookRights() {
 /**
  * _runSubGenerator
  * method that runs a subgenerator
- * @param		string		generator 	the name of the subgenerator that we will run
+ * @param		string		generator		the name of the subgenerator that we will run
  * @param		object		basicInfo		basic options(eg. name) that we want to pass to the subgenerator
  * @returns a promise obj
  */

@@ -46,7 +46,7 @@ HapiGenerator.prototype._welcome =
  */
 
 /**
- * Welcome prompt
+ * welcome
  * 
  * Say hello and setup the default data
  */
@@ -69,9 +69,9 @@ HapiGenerator.prototype.welcome = function welcome() {
 };
 
 /**
- * Basic info promtp
+ * askBasic
  * 
- * Generate the prompt to ask the basic informations
+ * Generate the prompt to ask the basic information
  * and set the result in this.basicInfo
  * This method is common to all generators 
  * The default basicInfo data is set in the welcome method
@@ -79,7 +79,7 @@ HapiGenerator.prototype.welcome = function welcome() {
 HapiGenerator.prototype.askBasic = common.askBasic;
 
 /**
- * General info promtp
+ * askGeneral
  *
  * Ask for the general information
  * on top of basic info, 
@@ -109,9 +109,9 @@ HapiGenerator.prototype.askGeneral = function askGeneral() {
 };
 
 /**
- * Hapi dependencies promtp
+ * askHapiDependencies
  * 
- * Ask for which hapi dependencies the user want
+ * Ask for which hapi dependencies the user wants
  * to install. The prompt is generated from data.js
  * No version number is asked, in any case the
  * latest version is installed
@@ -152,12 +152,12 @@ HapiGenerator.prototype.askHapiDependencies = function askHapiDependencies() {
 };
 
 /**
- * External dependencies promtp
+ * askExternalDependencies
  * 
- * Ask for which external dependencies the user want
+ * Ask for which external dependencies the user wants
  * to install. The prompt is generated from data.js
- * No version number is asked, in any case the
- * latest version is installed
+ * No version number is asked, the latest version is 
+ * installed by default
  * Then set the data into this.extDependencies
  */
 HapiGenerator.prototype.askExternalDependencies = function askExternalDependencies() {

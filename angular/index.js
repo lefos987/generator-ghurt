@@ -5,7 +5,15 @@ var yeoman = require('yeoman-generator');
 var generatorData = require('./data.js');
 var common = require('../common/common.js');
 
-
+/**
+ * Angular SubGenerator
+ * 
+ * the generator is build in 3 parts
+ * 1. setup the data in the generator class
+ * 2. promtp methods
+ * 3. installation
+ * 
+ */
 var NgcapGenerator = module.exports = function NgcapGenerator(args, options, config) {
 	yeoman.generators.Base.apply(this, arguments);
 	this.options = options;
@@ -67,6 +75,11 @@ NgcapGenerator.prototype._hasExtDepend = function _hasExtDepend(mod) {
  * ------------------------------------------------------------------
  */
 
+/**
+ * welcome
+ * 
+ * Say hello and setup the default data
+ */
 NgcapGenerator.prototype.welcome = function welcome() {
 	if (!this.options['skip-welcome-message']) {
 		console.log(this.yeoman);
@@ -87,8 +100,24 @@ NgcapGenerator.prototype.welcome = function welcome() {
 	}
 };
 
+/**
+ * askBasic
+ * 
+ * Generate the prompt to ask the basic information
+ * and set the result in this.basicInfo
+ * This method is common to all generators 
+ * The default basicInfo data is set in the welcome method
+ */
 NgcapGenerator.prototype.askBasic = common.askBasic;
 
+
+/**
+ * askGeneral
+ *
+ * Ask for the general information
+ * on top of basic info, 
+ * then add it to basicInfo
+ */
 NgcapGenerator.prototype.askGeneral = function askGeneral() {
 
 	var cb = this.async();
@@ -112,6 +141,15 @@ NgcapGenerator.prototype.askGeneral = function askGeneral() {
 	}.bind(this));
 };
 
+/**
+ * askNgDependencies
+ * 
+ * Ask for which angular dependencies the user wants
+ * to install. The prompt is generated from data.js
+ * The angular version number that is passed by the prompt
+ * will be used by all ng dependencies.
+ * Then set the data into this.ngDependencies
+ */
 NgcapGenerator.prototype.askNgDependencies = function askNgDependencies() {
 	if (!!this.basicInfo.quickInstall) {
 		return;
@@ -147,6 +185,15 @@ NgcapGenerator.prototype.askNgDependencies = function askNgDependencies() {
 
 };
 
+/**
+ * askExternalDependencies
+ * 
+ * Ask for which external dependencies the user wants
+ * to install. The prompt is generated from data.js
+ * No version number is asked, the latest version is 
+ * installed by default
+ * Then set the data into this.extDependencies
+ */
 NgcapGenerator.prototype.askExternalDependencies = function askExternalDependencies() {
 	if (!!this.basicInfo.quickInstall) {
 		return;
@@ -175,6 +222,11 @@ NgcapGenerator.prototype.askExternalDependencies = function askExternalDependenc
 	}.bind(this));
 };
 
+/**
+ * jqueryAlert
+ * A prompt to force people not to install jQuery when they use Angular
+ * Just a joke ... Nothing to see here! Move on!
+ */
 NgcapGenerator.prototype.jqueryAlert = function jqueryAlert() {
 	var cb = this.async();
 
@@ -194,6 +246,11 @@ NgcapGenerator.prototype.jqueryAlert = function jqueryAlert() {
 	}
 };
 
+/**
+ * askFoundation
+ * Ask if the app needs to include Zurb Foundation for styles.
+ * If yes then check which version the user wants (latest by default)
+ */
 NgcapGenerator.prototype.askFoundation = function askFoundation() {
 	if (!!this.basicInfo.quickInstall) {
 		return;
@@ -227,6 +284,12 @@ NgcapGenerator.prototype.askFoundation = function askFoundation() {
  * ------------------------------------------------------------------
  */
 
+/**
+ * bowerDependencies
+ *
+ * Generate the dependency object for bower.json
+ * ready for the template 
+ */
 NgcapGenerator.prototype.bowerDependencies = function bowerDependencies() {
 	var dependencies = {};
 	dependencies.angular = this.ngDependencies.ngVersion;
@@ -242,6 +305,12 @@ NgcapGenerator.prototype.bowerDependencies = function bowerDependencies() {
 	this.bowerDependencies = dependencies;
 };
 
+/**
+ * createStructure
+ * 
+ * Create the folder structure of the repo
+ * obvious, isn't it?
+ */
 NgcapGenerator.prototype.createStructure = function createStructure() {
 	this.mkdir('src');
 	this.mkdir('src/app');
@@ -260,6 +329,11 @@ NgcapGenerator.prototype.createStructure = function createStructure() {
 	this.mkdir('dist/assets/fonts');
 };
 
+/**
+ * rootFilesInit
+ * 
+ * Generate the files of the root folder
+ */
 NgcapGenerator.prototype.rootFilesInit = function rootFilesInit() {
 	this.template('_package.json', 'package.json');
 	this.template('jshintrc', '.jshintrc');
@@ -268,6 +342,11 @@ NgcapGenerator.prototype.rootFilesInit = function rootFilesInit() {
 	this.copy('.gitignore', '.gitignore');
 };
 
+/**
+ * srcFolderInit
+ * 
+ * Generate the files of the source folder
+ */
 NgcapGenerator.prototype.srcFolderInit = function srcFolderInit() {
 	this.template('src/_index.html', 'src/index.html');
 
@@ -277,21 +356,40 @@ NgcapGenerator.prototype.srcFolderInit = function srcFolderInit() {
 	this.copy('src/app/common.js', 'src/app/common/common.js');
 
 	this.copy('src/styles/config.rb', 'src/styles/config.rb');
+
+	// Add this only if Foundation is required to be installed
 	if (this.fdnSettings.isRequired) {
 		this.copy('src/styles/foundation.scss', 'src/styles/scss/foundation.scss');
 		this.copy('src/styles/variables.scss', 'src/styles/scss/_variables.scss');
 	}
 };
 
+/**
+ * testFolderInit
+ * 
+ * Generate the files of the test folder (karma and protractor configs)
+ */
 NgcapGenerator.prototype.testFolderInit = function testFolderInit() {
 	this.template('test/_karma.conf.js', 'test/config/karma.conf.js');
 	this.copy('test/protractorConf.js', 'test/config/protractorConf.js');
 };
 
+/**
+ * vendorFolderInit
+ * 
+ * Generate the files of the vendor folder (bower.json)
+ */
 NgcapGenerator.prototype.vendorFilesInit = function vendorFilesInit() {
 	this.template('vendor/_bower.json', 'dist/vendor/bower.json');
 };
 
+/**
+ * installDeps
+ * 
+ * Install the dependencies of the repo
+ * > npm install
+ * > bower install
+ */
 NgcapGenerator.prototype.installDeps = function installDeps() {
 	var cb = this.async();
 	this.installDependencies({
