@@ -182,15 +182,3 @@ CapinnovationGenerator.prototype._runSubGenerator = function _runSubGenerator(su
 	});
 	return deferred.promise;
 };
-
-CapinnovationGenerator.prototype._createServer = function _createServer(server, basicInfo) {
-	var deferred = Q.defer();
-	var options = {
-		'skip-welcome-message': true,
-		basicInfo: basicInfo
-	};
-	this.invoke('capinnovation:' + server, {options: options}, function () {
-		deferred.resolve();
-	});
-	return deferred.promise;
-};
