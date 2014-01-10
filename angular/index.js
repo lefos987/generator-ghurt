@@ -25,7 +25,11 @@ util.inherits(NgcapGenerator, yeoman.generators.Base);
 
 NgcapGenerator.prototype._ngDepend = generatorData.ngDependencies;
 NgcapGenerator.prototype._extDepend = generatorData.extDependencies;
-
+NgcapGenerator.prototype._welcome =
+'\n             __                  __          __ ' +
+'\n   /\\  |\\ | / _` |  | |     /\\  |__)      | /__`' +
+'\n  /--\\ | \\| \\__> \\__/ |___ /--\\ |  \\ . \\__/ .__/' +
+'\n  client side ----------------------------------\n';
 
 /**
  * Private methods
@@ -68,7 +72,7 @@ NgcapGenerator.prototype.welcome = function welcome() {
 		console.log(this.yeoman);
 	}
 	else {
-		console.log('--------------- Let\'s configure your client application -------------');
+		console.log(this._welcome);
 	}
 
 	// Setup default config

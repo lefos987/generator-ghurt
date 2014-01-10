@@ -4,10 +4,21 @@ var yeoman = require('yeoman-generator');
 var generatorData = require('./data.js');
 var common = require('../common/common.js');
 
+/**
+ * Hapi SubGenerator
+ * 
+ * the generator is build in 3 parts
+ * 1. setup the data in the generator class
+ * 2. promtp methods
+ * 3. installation
+ * 
+ */
+
 var HapiGenerator = module.exports = function HapiGenerator(args, options, config) {
 	this.options = options;
-	//Commented out as a placeholder for possible future use
-	//this.on('end', function () {});
+
+	// Commented out as a placeholder for possible future use
+	// this.on('end', function () {});
 	yeoman.generators.Base.apply(this, arguments);
 };
 
@@ -22,19 +33,29 @@ util.inherits(HapiGenerator, yeoman.generators.NamedBase);
 
 HapiGenerator.prototype._hapiDepend = generatorData.hapiDependencies;
 HapiGenerator.prototype._extDepend = generatorData.extDependencies;
+HapiGenerator.prototype._welcome =
+'\n             __    ' +
+'\n  |__|  /\\  |__) | ' +
+'\n  |  | /--\\ |    | ' +
+'\n  server side -----\n';
 
 
 /**
- * Public methods / install script
+ * Public methods / prompt scripts
  * ------------------------------------------------------------------
  */
 
+/**
+ * Welcome prompt
+ * 
+ * Say hello and setup the default data
+ */
 HapiGenerator.prototype.welcome = function welcome() {
 	if (!this.options['skip-welcome-message']) {
 		console.log(this.yeoman);
 	}
 	else {
-		console.log('--------------- Let\'s configure your server application -------------');
+		console.log(this._welcome);
 	}
 	// Setup default config
 	this.basicInfo = generatorData.defaultConfig.basicInfo;
@@ -47,7 +68,24 @@ HapiGenerator.prototype.welcome = function welcome() {
 	}
 };
 
-HapiGenerator.prototype.askBasic = function askBasic() {
+/**
+ * Basic info promtp
+ * 
+ * Generate the prompt to ask the basic informations
+ * and set the result in this.basicInfo
+ * This method is common to all generators 
+ * The default basicInfo data is set in the welcome method
+ */
+HapiGenerator.prototype.askBasic = common.askBasic;
+
+/**
+ * General info promtp
+ *
+ * Ask for the general information
+ * on top of basic info, 
+ * then add it to basicInfo
+ */
+HapiGenerator.prototype.askGeneral = function askGeneral() {
 
 	var cb = this.async();
 	console.log('We need some information about your app to automagically create it...');
@@ -70,7 +108,15 @@ HapiGenerator.prototype.askBasic = function askBasic() {
 	}.bind(this));
 };
 
-
+/**
+ * Hapi dependencies promtp
+ * 
+ * Ask for which hapi dependencies the user want
+ * to install. The prompt is generated from data.js
+ * No version number is asked, in any case the
+ * latest version is installed
+ * Then set the data into this.hapiDependencies
+ */
 HapiGenerator.prototype.askHapiDependencies = function askHapiDependencies() {
 	if (!!this.basicInfo.quickInstall) {
 		return;
@@ -103,9 +149,17 @@ HapiGenerator.prototype.askHapiDependencies = function askHapiDependencies() {
 		this.hapiDependencies = props;
 		cb();
 	}.bind(this));
-
 };
 
+/**
+ * External dependencies promtp
+ * 
+ * Ask for which external dependencies the user want
+ * to install. The prompt is generated from data.js
+ * No version number is asked, in any case the
+ * latest version is installed
+ * Then set the data into this.extDependencies
+ */
 HapiGenerator.prototype.askExternalDependencies = function askExternalDependencies() {
 	if (!!this.basicInfo.quickInstall) {
 		return;
@@ -134,11 +188,18 @@ HapiGenerator.prototype.askExternalDependencies = function askExternalDependenci
 	}.bind(this));
 };
 
+
 /**
  * End of questions / deploy
  * ------------------------------------------------------------------
  */
 
+/**
+ * npmDependencies
+ *
+ * Generate the dependency object for package.json
+ * ready for the template 
+ */
 HapiGenerator.prototype.npmDependencies = function npmDependencies() {
 	var dependencies = {};
 	dependencies.hapi = this.hapiDependencies.hapiVersion;
@@ -151,6 +212,12 @@ HapiGenerator.prototype.npmDependencies = function npmDependencies() {
 	this.npmDependencies = dependencies;
 };
 
+/**
+ * createStructure
+ * 
+ * Create the folder structure of the repo
+ * obvious, isn't it?
+ */
 HapiGenerator.prototype.createStructure = function createStructure() {
 	this.mkdir('src');
 	this.mkdir('src/api');
@@ -160,6 +227,11 @@ HapiGenerator.prototype.createStructure = function createStructure() {
 	this.mkdir('test/api');
 };
 
+/**
+ * rootFilesInit
+ * 
+ * Generate the files of the root folder
+ */
 HapiGenerator.prototype.rootFilesInit = function rootFilesInit() {
 	this.template('_package.json', 'package.json');
 	this.copy('.jshintrc', '.jshintrc');
@@ -169,11 +241,22 @@ HapiGenerator.prototype.rootFilesInit = function rootFilesInit() {
 	this.template('_server.js', 'server.js');
 };
 
+/**
+ * srcFolderInit
+ * 
+ * Generate the files of the source folder
+ */
 HapiGenerator.prototype.srcFolderInit = function srcFolderInit() {
 	this.copy('src/indexRoutes.js', 'src/api/index/indexRoutes.js');
 	this.copy('src/en_GB.json', 'src/error_messages/en_GB.json');
 };
 
+/**
+ * installDeps
+ * 
+ * Install the dependencies of the repo
+ * > npm install
+ */
 HapiGenerator.prototype.installDeps = function installDeps() {
 	var cb = this.async();
 	this.installDependencies({
