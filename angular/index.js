@@ -96,7 +96,7 @@ NgcapGenerator.prototype.askGeneral = function askGeneral() {
 	var prompts = [{
 		type: 'input',
 		name: 'connectServerPort',
-		message: 'What\'s the connect server port?',
+		message: 'What\'s the port of your livereload server?',
 		default: this.basicInfo.connectServerPort,
 		validate: common.checkPort
 	}, {

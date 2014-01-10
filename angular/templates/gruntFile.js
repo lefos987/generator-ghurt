@@ -182,7 +182,7 @@ module.exports = function (grunt) {
 			},
 			html: {
 				files: ['<%= src.html %>'],
-				tasks: ['clean:index', 'concat:index']
+				tasks: ['clean:index', 'html2js', 'concat:index']
 			}
 		}
 	});
