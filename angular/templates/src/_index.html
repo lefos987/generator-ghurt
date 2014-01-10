@@ -19,7 +19,7 @@
 		<div class="row wrapper" ng-view=""></div>
 		<% } else { %>
 		<!-- ng-include for main controller -->
-		<ng-include src="./src/app/app.view.html"></ng-include>
+		<div ng-controller="AppCtrl" ng-include="templateUrl"></div>
 		<% } %>
 
 		<!-------------------------------- Scripts --------------------------------------------->

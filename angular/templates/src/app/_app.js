@@ -15,5 +15,6 @@ angular.module('app', ['templates', 'common'<%= _.map(ngDependencies.ngDepend, f
 	}])<% } %>
 	.controller('AppCtrl', ['$scope', function ($scope) {
 			$scope.message = 'Hello World';
+			$scope.templateUrl = 'app/app.view.html';
 		}
 	]);
