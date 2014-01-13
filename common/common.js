@@ -45,7 +45,7 @@ var common = {
 	 * @return	boolean/string
 	 */
 	checkRequired: function (opt) {
-		if (opt.length > 0) {
+		if (/^[a-zA-Z0-9-_]+$/.test(opt)) {
 			return true;
 		}
 		else {
