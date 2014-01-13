@@ -1,23 +1,32 @@
 'use strict';
 
-/*global module*/
-
 module.exports = function (grunt) {
+	// NPM module that loads all tasks of type grunt-
 	require('load-grunt-tasks')(grunt);
 	var pkg = grunt.file.readJSON('package.json');
 
 	// Project configuration.
 	grunt.initConfig({
-		watch: {
-			files: ['gruntFile.js', 'server.js', 'src/**/*.js', 'test/**/*.js'],
-			tasks: 'develop'
-		},
+		/**
+		 * Build Tasks
+		 * ###########################################################
+		 */
+
+		/**
+		 * jshint
+		 * Apply lint rules into the js code
+		 */
 		jshint: {
 			files: ['gruntFile.js', 'server.js', 'src/**/*.js', 'test/**/*.js'],
 			options: {
 				jshintrc: '.jshintrc'
 			}
 		},
+
+		/**
+		 * jasmine_node
+		 * Use jasmine_node test runner to run unit tests for node
+		 */
 		'jasmine_node': {
 			coverage: {
 				options : {
@@ -45,12 +54,28 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+
+		/**
+		 * Reports and Docs
+		 * ------------------------------------------------------------------
+		 */
+		
+		/**
+		 * ngdocs
+		 * Generates documentation from comments according to the Angular way
+		 * (based on jsDoc)
+		 */
 		ngdocs: {
 			options: {
 				html5Mode: false
 			},
 			all: ['src/**/*.js']
 		},
+
+		/**
+		 * plato
+		 * Use plato util to generate static analysis report for our code
+		 */
 		plato: {
 			scripts: {
 				files: {
@@ -58,10 +83,36 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+
+		/**
+		 * LiveReload Tasks
+		 * ###########################################################
+		 */
+
+		/**
+		 * watch
+		 * Watch the files for any change and apply the corresponding grunt task
+		 * according to the type of the file.
+		 * Example, if a scss file changes run compass and clean(to remove .sass-cache)
+		 */
+		watch: {
+			files: ['gruntFile.js', 'server.js', 'src/**/*.js', 'test/**/*.js'],
+			tasks: 'develop'
+		}
 	});
 
+	/**
+	 * Our Tasks
+	 * ###########################################################
+	 */
+
 	// Default task.
-	grunt.registerTask('develop', ['timestamp', 'jshint', 'test', 'watch']);
+	grunt.registerTask('develop', [
+		'timestamp',
+		'jshint',
+		'test',
+		'watch'
+	]);
 
 	grunt.registerTask('test', 'jasmine_node');
 
