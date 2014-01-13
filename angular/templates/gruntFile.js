@@ -316,7 +316,7 @@ module.exports = function (grunt) {
 	grunt.registerTask('server', ['connect:server']);
 
 	grunt.registerTask('report', [
-		'clean',
+		'clean:other',
 		'ngdocs',
 		'karma:build',
 		'plato',
@@ -333,6 +333,7 @@ module.exports = function (grunt) {
 		'cssmin',
 		'uglify',
 		'usemin',
+		'ngdocs',
 		'karma:build',
 		'plato',
 		'coverage'
