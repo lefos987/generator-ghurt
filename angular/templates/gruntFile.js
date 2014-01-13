@@ -50,7 +50,7 @@ module.exports = function (grunt) {
 				src: '<%= distDir %>/app.js'
 			},
 			other: {
-				src: 'coverage'
+				src: ['docs', 'report']
 			}
 		},
 		/**
@@ -216,7 +216,7 @@ module.exports = function (grunt) {
 					functions: 90,
 					lines: 90
 				},
-				dir: 'coverage'
+				dir: 'report/coverage'
 			}
 		},
 		/**
@@ -237,7 +237,7 @@ module.exports = function (grunt) {
 		plato: {
 			scripts: {
 				files: {
-					'report/output/directory': ['<%= src.js %>', '<%= src.specs %>']
+					'report/plato': ['<%= src.js %>', '<%= src.specs %>']
 				}
 			}
 		},
@@ -315,6 +315,14 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('server', ['connect:server']);
 
+	grunt.registerTask('report', [
+		'clean',
+		'ngdocs',
+		'karma:build',
+		'plato',
+		'coverage'
+	]);
+
 	grunt.registerTask('build', [
 		'clean',
 		'compass',
@@ -326,6 +334,7 @@ module.exports = function (grunt) {
 		'uglify',
 		'usemin',
 		'karma:build',
+		'plato',
 		'coverage'
 	]);
 

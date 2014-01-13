@@ -66,6 +66,12 @@ module.exports = function(config) {
 			// If a template need to be tested (and add it to configFiles)
 			// 'src/app/common/widget/widget.html': ['ng-html2js'],
 			'src/app/**/*.js': ['coverage']
+		},
+
+		// Config for coverage report
+		coverageReporter: {
+			type: 'html',
+			dir: 'report/coverage'
 		}
 
 	});
