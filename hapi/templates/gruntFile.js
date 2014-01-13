@@ -36,6 +36,7 @@ module.exports = function (grunt) {
 					statements: 90,
 					lines: 90
 				},
+				savePath: 'report/coverage',
 				src: ['src/**/*.js']
 			},
 			verbose: false,
@@ -79,7 +80,7 @@ module.exports = function (grunt) {
 		plato: {
 			scripts: {
 				files: {
-					'report/output/directory': ['src/**/*.js', 'test/**/*.js']
+					'report/plato': ['src/**/*.js', 'test/**/*.js']
 				}
 			}
 		},
@@ -91,9 +92,7 @@ module.exports = function (grunt) {
 
 		/**
 		 * watch
-		 * Watch the files for any change and apply the corresponding grunt task
-		 * according to the type of the file.
-		 * Example, if a scss file changes run compass and clean(to remove .sass-cache)
+		 * Watch the scripts for any change and apply the develop grunt task
 		 */
 		watch: {
 			files: ['gruntFile.js', 'server.js', 'src/**/*.js', 'test/**/*.js'],
@@ -116,14 +115,20 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('test', 'jasmine_node');
 
-	grunt.registerTask('timestamp', function () {
-		grunt.log.subhead(Date());
-	});
-
 	grunt.registerTask('server', function () {
 		this.async();
 		require('supervisor').run(['server.js']);
 	});
 
-	grunt.registerTask('build', ['jshint', 'test']);
+	grunt.registerTask('report', [
+		'ngdocs',
+		'test',
+		'plato'
+	]);
+
+	grunt.registerTask('build', ['jshint', 'report']);
+
+	grunt.registerTask('timestamp', function () {
+		grunt.log.subhead(Date());
+	});
 };
