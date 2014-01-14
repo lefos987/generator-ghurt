@@ -1,45 +1,49 @@
-# generator-capinnovation [![Build Status](https://secure.travis-ci.org/lefos987/generator-capinnovation.png?branch=master)](https://travis-ci.org/lefos987/generator-capinnovation)
+# generator-capinnovation
 
 A generator for [Yeoman](http://yeoman.io).
 
-
-## Getting Started
-
-### What is Yeoman?
-
-Trick question. It's not a thing. It's this guy:
-
 ![](http://i.imgur.com/JHaAlBJ.png)
 
-Basically, he wears a top hat, lives in your computer, and waits for you to tell him what kind of application you wish to create.
+## How it works?
 
-Not every new computer comes with a Yeoman pre-installed. He lives in the [npm](https://npmjs.org) package repository. You only have to ask for him once, then he packs up and moves into your hard drive. *Make sure you clean up, he likes new and shiny things.*
+This generator has been built with Yeoman, to make your life easier and make a repo ready to use. It can be used for client side only, or server side only or a combinaison of both. The idea is to can build a repo, based on the framework requested. At the moment the generator can only create AngularJS app for the client side, and HapiJS for the server side.
+
+## How is it built?
+
+As explained before, there different frameworks available. So to keep the repo as clear as possible, each framework got his own subgenerator. The master generator is only here to pickup the one you want and build your repo.
+
+Every subgenerator can be called separately, but by passing out of the main generator, some options can miss, like the git init.
+
+For further informations, check the readme file in each subgenerator folder.
+
+## How to use it?
+
+This package is a Yeoman generator, so you will need first to install `yo` on your computer.
 
 ```
 $ npm install -g yo
 ```
 
-### Yeoman Generators
-
-Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
-
-To install generator-capinnovation from npm, run:
+Then install generator-capinnovation from npm, run:
 
 ```
 $ npm install -g generator-capinnovation
 ```
 
-Finally, initiate the generator:
+Finally, initiate the generator in the repo you want:
 
 ```
 $ yo capinnovation
 ```
 
-### Getting To Know Yeoman
+## then..
 
-Yeoman has a heart of gold. He's a person with feelings and opinions, but he's very easy to work with. If you think he's too opinionated, he can be easily convinced.
+After the last command, the questionning and the downloading of hundreds of node packages: your repo is ready. 
 
-If you'd like to get to know Yeoman better and meet some of his friends, [Grunt](http://gruntjs.com) and [Bower](http://bower.io), check out the complete [Getting Started Guide](https://github.com/yeoman/yeoman/wiki/Getting-Started).
+ - [Grunt](http://gruntjs.com) : the javascript task runner
+ - [Bower](http://bower.io) : a package manager for the web
+ - [Git](http://git-scm.com) : version control system 
+ - [Node](http://nodejs.org) : scalable network applications
 
 
 ## License
