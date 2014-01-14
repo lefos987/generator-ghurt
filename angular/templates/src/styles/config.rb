@@ -1,5 +1,3 @@
-require 'zurb-foundation'
-require 'sassy-math'
 # Require any additional compass plugins here.
 
 
