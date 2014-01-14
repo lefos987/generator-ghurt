@@ -18,18 +18,18 @@ test/
 ```
 
 ### config.js
-Contain all the settings related to the server. At the moment it only contain the server port.
+Contains all the settings related to the server. At the moment it only contains the server port.
 
 ### server.js
-Main script of the app, init hapi with the config and link the routes.
+Main script of the app. Initializes hapi with the provided configuration and a simple route.
 
 ### docs/
 Documentation folder, generated during `grunt build`. Built with ngDocs, based on jsdoc.
 
 ### report/
-Reporting folder, generated after `grunt report` or `grunt build`. It contain two subfolders:
+Reporting folder, generated after `grunt report` or `grunt build`. It contains two subfolders:
 
- - coverage: stats from karma
+ - coverage: stats from jasmine node for test coverage
  - plato: static analysis report
 
 ### src/
@@ -39,18 +39,18 @@ Contains all the scripts.
  - error_messages: error message json database. Used by Joi.
 
 ### test/
-Contain all the necessary scripts for tests.
+Contains all the necessary specs for our unit tests.
 
 
 ## Grunt tasks
 
-This repo is configured to work with Grunt. The basic task are already set, here is the list of different tasks programmed.
+This repo is configured to work with Grunt. The basic tasks are already set. Here is the list of what is available:
 
 ### develop
-Develop is the task to run during the development process. It keeps watching the changes on scripts and repass jshint and test on any change.
+Develop is the task to run during the development process. It keeps watching the changes on scripts and re-runs jshint and test on any change.
 
 ### test
-Run jasmine to test scripts.
+Run jasmine_node to test scripts.
 
 ### server
 Start server by running server.js

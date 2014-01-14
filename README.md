@@ -6,19 +6,19 @@ A generator for [Yeoman](http://yeoman.io).
 
 ## How it works?
 
-This generator has been built with Yeoman, to make your life easier and make a repo ready to use. It can be used for client side only, or server side only or a combinaison of both. The idea is to can build a repo, based on the framework requested. At the moment the generator can only create AngularJS app for the client side, and HapiJS for the server side.
+This generator has been built with Yeoman, to make your life easier and create a repo ready to use. It can be used for client side only, or server side only or a combination of both. The idea is to be able to build an application, based on the framework requested. At the moment the generator can only create AngularJS app for the client side, and HapiJS for the server side.
 
 ## How is it built?
 
-As explained before, there different frameworks available. So to keep the repo as clear as possible, each framework got his own subgenerator. The master generator is only here to pickup the one you want and build your repo.
+As explained before, there are different frameworks available. So to keep the main generator as clear as possible, each framework got its own subgenerator. The master generator is only here to pick up the one you want and build your app.
 
-Every subgenerator can be called separately, but by passing out of the main generator, some options can miss, like the git init.
+Every subgenerator can be called separately, but by not using the main generator, some options will not be configured, like initializing a git repo to your directory or setting up git hooks for code quality.
 
-For further informations, check the readme file in each subgenerator folder.
+For further information, check the readme file in each subgenerator folder.
 
 ## How to use it?
 
-This package is a Yeoman generator, so you will need first to install `yo` on your computer.
+This package is a Yeoman generator, so you will first need to install `yo` on your computer.
 
 ```
 $ npm install -g yo
@@ -36,9 +36,20 @@ Finally, initiate the generator in the repo you want:
 $ yo capinnovation
 ```
 
-## then..
+If you only want to run a subgenerator:
 
-After the last command, the questionning and the downloading of hundreds of node packages: your repo is ready. 
+```
+$ yo capinnovation:angular #for the angular subgenerator
+
+```
+```
+$ yo capinnovation:hapi #for the hapijs subgenerator
+
+```
+
+## Then..
+
+After providing any required information and configuration to the generator, it will install the required dependencies and you are ready to roll! 
 
  - [Grunt](http://gruntjs.com) : the javascript task runner
  - [Bower](http://bower.io) : a package manager for the web
