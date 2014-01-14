@@ -56,7 +56,21 @@ After providing any required information and configuration to the generator, it 
  - [Git](http://git-scm.com) : version control system 
  - [Node](http://nodejs.org) : scalable network applications
 
+### Author
+**Capgemini Digital Innovation Lab**
+
+<img src="img/capgemini-logo.svg" alt="capgemini logo" style="height: 30px;">
+<img src="img/capgemini_digital_logo.svg" alt="capgemini digital logo" style="height:20px; margin: 5px 10px;">
+
+### Contributors
+- [Max Duluc](https://github.com/maxwellito)
+- [Lefteris Paraskevas](https://github.com/lefos987)
+- [Cam Parry](https://github.com/wallies)
+
+
+
 
 ## License
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
+

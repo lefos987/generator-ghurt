@@ -119,9 +119,8 @@ NgcapGenerator.prototype.askBasic = common.askBasic;
  * then add it to basicInfo
  */
 NgcapGenerator.prototype.askGeneral = function askGeneral() {
-
+	
 	var cb = this.async();
-	console.log('We need some information about your app to automagically create it...');
 	var prompts = [{
 		type: 'input',
 		name: 'connectServerPort',

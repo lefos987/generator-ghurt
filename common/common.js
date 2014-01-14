@@ -136,7 +136,7 @@ var common = {
 		}];
 
 		this.prompt(prompts, function (props) {
-			this.basicInfo = props;
+			this.basicInfo = common.merge(this.basicInfo, props);
 			this.basicInfo._set = true;
 			cb();
 		}.bind(this));
