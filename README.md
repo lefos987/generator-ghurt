@@ -55,10 +55,7 @@ After providing any required information and configuration to the generator, it 
  - [Node](http://nodejs.org) : scalable network applications
 
 ### Author
-**Capgemini Digital Innovation Lab**
-
-<img src="https://raw.github.com/lefos987/generator-capinnovation/master/img/capgemini-logo.svg" alt="capgemini logo" style="height: 30px;">
-<img src="https://raw.github.com/lefos987/generator-capinnovation/master/img/capgemini_digital_logo.svg" alt="capgemini digital logo" style="height:20px; margin: 5px 10px;">
+**[Capgemini Digital Innovation Lab](http://www.uk.capgemini.com/digital-services)**
 
 ### Contributors
 - [Max Duluc](https://github.com/maxwellito)
