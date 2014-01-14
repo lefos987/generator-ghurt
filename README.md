@@ -40,11 +40,9 @@ If you only want to run a subgenerator:
 
 ```
 $ yo capinnovation:angular #for the angular subgenerator
-
 ```
 ```
 $ yo capinnovation:hapi #for the hapijs subgenerator
-
 ```
 
 ## Then..
@@ -59,8 +57,8 @@ After providing any required information and configuration to the generator, it 
 ### Author
 **Capgemini Digital Innovation Lab**
 
-<img src="img/capgemini-logo.svg" alt="capgemini logo" style="height: 30px;">
-<img src="img/capgemini_digital_logo.svg" alt="capgemini digital logo" style="height:20px; margin: 5px 10px;">
+<img src="https://raw.github.com/lefos987/generator-capinnovation/master/img/capgemini-logo.svg" alt="capgemini logo" style="height: 30px;">
+<img src="https://raw.github.com/lefos987/generator-capinnovation/master/img/capgemini_digital_logo.svg" alt="capgemini digital logo" style="height:20px; margin: 5px 10px;">
 
 ### Contributors
 - [Max Duluc](https://github.com/maxwellito)
