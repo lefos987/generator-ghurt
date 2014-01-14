@@ -55,7 +55,7 @@ After providing any required information and configuration to the generator, it 
  - [Node](http://nodejs.org) : scalable network applications
 
 ### Author
-**[Capgemini Digital Innovation Lab](http://www.uk.capgemini.com/digital-services)**
+**Capgemini Digital Innovation Lab**
 
 ### Contributors
 - [Max Duluc](https://github.com/maxwellito)
