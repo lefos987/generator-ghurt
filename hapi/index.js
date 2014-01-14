@@ -235,7 +235,7 @@ HapiGenerator.prototype.rootFilesInit = function rootFilesInit() {
 	this.template('_package.json', 'package.json');
 	this.copy('.jshintrc', '.jshintrc');
 	this.copy('gruntFile.js', 'gruntFile.js');
-	this.copy('.gitignore', '.gitignore');
+	this.copy('_gitignore', '.gitignore');
 	this.template('_config.js', 'config.js');
 	this.template('_server.js', 'server.js');
 };

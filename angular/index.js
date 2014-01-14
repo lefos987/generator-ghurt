@@ -119,7 +119,7 @@ NgcapGenerator.prototype.askBasic = common.askBasic;
  * then add it to basicInfo
  */
 NgcapGenerator.prototype.askGeneral = function askGeneral() {
-	
+
 	var cb = this.async();
 	var prompts = [{
 		type: 'input',
@@ -273,7 +273,6 @@ NgcapGenerator.prototype.askFoundation = function askFoundation() {
 	}];
 	this.prompt(prompts, function (props) {
 		this.fdnSettings = props;
-		console.log('fdn: ', this.fdnSettings);
 		cb();
 	}.bind(this));
 };
@@ -338,7 +337,7 @@ NgcapGenerator.prototype.rootFilesInit = function rootFilesInit() {
 	this.template('jshintrc', '.jshintrc');
 	this.copy('gruntFile.js', 'gruntFile.js');
 	this.copy('bowerrc', '.bowerrc');
-	this.copy('.gitignore', '.gitignore');
+	this.copy('_gitignore', '.gitignore');
 };
 
 /**
