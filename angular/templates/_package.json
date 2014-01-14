@@ -8,7 +8,7 @@
   "repository": {
     "type": "git",
     "pathPrefix": "<%= basicInfo.pathPrefix %>"<% if (basicInfo.repo !== '') { %>,
-    "url": "<%= basincInfo.repo %>"<% } %>
+    "url": "<%= basicInfo.repo %>"<% } %>
   },
   "dependencies": {},
   "devDependencies": {
