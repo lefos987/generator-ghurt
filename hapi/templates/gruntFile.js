@@ -115,7 +115,7 @@ module.exports = function (grunt) {
 
 	grunt.registerTask('test', 'jasmine_node');
 
-	grunt.registerTask('server', function () {
+	grunt.registerTask('serve', function () {
 		this.async();
 		require('supervisor').run(['server.js']);
 	});
