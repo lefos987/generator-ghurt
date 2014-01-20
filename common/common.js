@@ -3,13 +3,13 @@
 
 var common = {
 	/**
- * _checkVersion
- * validation method to check if the string given
- * in param is a valid number
- * 
- * @param	string			version		Value to test
- * @return	boolean/string
- */
+	 * checkVersion
+	 * validation method to check if the string given
+	 * in param is a valid number
+	 * 
+	 * @param	string			version		Value to test
+	 * @return	boolean/string
+	 */
 	checkVersion: function (version) {
 		var pass = /^\~?[0-9]+(\.[0-9]+)\.(([0-9]+)|(x))$/.test(version);
 		if (pass || (version === 'latest')) {
@@ -20,7 +20,7 @@ var common = {
 		}
 	},
 	/**
-	 * _checkProjectVersion
+	 * checkProjectVersion
 	 * validation method to check if the string given
 	 * in param is a valid number for versionning in
 	 * package.json
@@ -38,7 +38,7 @@ var common = {
 	},
 
 	/**
-	 * _checkRequired
+	 * checkRequired
 	 * validation method to check if a string is not empty
 	 * 
 	 * @param		string			opt		Value to test
@@ -54,7 +54,7 @@ var common = {
 	},
 
 	/**
-	 * _checkPort
+	 * checkPort
 	 * validation method to check if a number is a valid
 	 * and usable port
 	 * 
@@ -72,7 +72,36 @@ var common = {
 	},
 
 	/**
-	 * Merge
+	 * checkModuleName
+	 * validation method to check if a string is a
+	 * valid name
+	 * 
+	 * @param		string			name		Value to test
+	 * @return	boolean/string
+	 */
+	checkModuleName: function (name) {
+		return (name === '') ? true : this.checkRequiredModuleName(name);
+	},
+
+	/**
+	 * checkRequiredModuleName
+	 * validation method to check if a string is a
+	 * valid name. Must not be empty.
+	 * 
+	 * @param		string			name		Value to test
+	 * @return	boolean/string
+	 */
+	checkRequiredModuleName: function (name) {
+		if (/^[a-z][a-zA-Z0-9]*(\/[a-z][a-zA-Z0-9]*)*$/.test(name)) {
+			return true;
+		}
+		else {
+			return 'The name/path must be in camel case';
+		}
+	},
+
+	/**
+	 * merge
 	 * merge two object and return it
 	 * 
 	 * @param objA
