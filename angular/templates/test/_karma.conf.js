@@ -11,7 +11,7 @@ module.exports = function(config) {
 			<%
 			var configFiles = [
 				"'dist/vendor/angular/angular.min.js'",
-				"'dist/vendor/angular-mocks/angular-mocks.min.js'",
+				"'dist/vendor/angular-mocks/angular-mocks.js'",
 				"'src/**/*.js'",
 				"'test/unit/**/*.spec.js'"
 			];
