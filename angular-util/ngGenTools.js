@@ -7,6 +7,7 @@
  */
 
 var common = require('../common/common.js');
+var chalk = require('chalk');
 
 /**
  * getGenericPrompt
@@ -51,19 +52,19 @@ var ngGenTools = {
 	
 	/**
 	 * Path for scripts
-	 * @type String
+	 * @type {String}
 	 */
 	scriptPath: 'src/app/',
 
 	/**
 	 * Path for tests
-	 * @type String
+	 * @type {String}
 	 */
 	testPath: 'test/unit/app/',
 
 	/**
 	 * Command database
-	 * @type Object
+	 * @type {Object}
 	 */
 	commands: {
 		controller: {
@@ -90,6 +91,23 @@ var ngGenTools = {
 		service: {
 			prompt: getGenericPrompt('service'),
 			objectSuffix: 'Service'
+		}
+	},
+
+	/**
+	 * Settings of file type
+	 * @type {Object}
+	 */
+	fileTypes: {
+		module: {
+			delimiter: ';',
+			contentPattern: '',
+			tplLink: '/_module.js'
+		},
+		test: {
+			delimiter: '});',
+			contentPattern: '',
+			tplLink: '/_test.spec.js'
 		}
 	},
 
@@ -148,12 +166,10 @@ var ngGenTools = {
 	 *
 	 */
 	execute: function () {
-
 		if (!this.generator.command || !this.generator.commandParams) {
 			console.log('There\'s not what I require');
 			return;
 		}
-
 		this.executeTreatment();
 		this.executeWriting();
 	},
@@ -197,6 +213,7 @@ var ngGenTools = {
 			};
 		}
 		this.generator.tpl.objectName += suffix;
+		this.generator.tpl.objectNameDash = common.toDashCase(this.generator.tpl.objectName);
 	},
 
 	/**
@@ -274,13 +291,11 @@ var ngGenTools = {
 	 * write the object script
 	 */
 	writeScript: function () {
-		var objectContent = this.generator.engine(
-			this.generator.readFileAsString(this.generator.src._base + '/scripts/_' + this.generator.command + '.js'),
-			this.generator
-		);
-		console.log(objectContent);
+		var filePath = this.scriptPath + this.generator.tpl.filePath + '.js';
+		var objectContent = this.engineFromTpl('/scripts/_' + this.generator.command + '.js');
+		this.insertIn('module', filePath, objectContent);
 
-		this.writeInModule(objectContent);
+		console.log(chalk.bold.yellow('Think to add your module \'' + this.generator.tpl.moduleName + '\' as dependency'));
 	},
 
 	/**
@@ -298,44 +313,62 @@ var ngGenTools = {
 	 */
 	writeTest: function () {
 		var filePath = this.testPath + this.generator.tpl.filePath + '.spec.js';
-		
-		// Generate the module file if it does not exists
-		if (!this.checkFile(filePath)) {
-			this.generator.template('_test.spec.js', filePath);
-		}
+		var objectContent = this.engineFromTpl('/tests/_' + this.generator.command + '.spec.js');
+		this.insertIn('test', filePath, objectContent);
 	},
 
+
 	/**
-	 * writeInModule
+	 * Utils
+	 * ------------------------------------------------------------------
+	 */
+
+	/**
+	 * insertIn
 	 * insert content into the module
-	 * if the module does not exists, the script generate it
+	 * if the file does not exists, the script generate it
 	 * 
 	 * @param		String	contentToInsert		Content to add in the module
 	 */
-	writeInModule: function (contentToInsert) {
-		var filePath = this.scriptPath + this.generator.tpl.filePath + '.js';
-		// var contentPattern = /angular\.module([^\(\)]*\([^\(\)]*\)[^\(\)]*)*;[\s]*$/;
+	insertIn: function (fileType, filePath, contentToInsert) {
+
+		// Load file config
+		var config = this.fileTypes[fileType];
 		var moduleContent;
 
 		// Generate the module file if it does not exists
 		if (!this.checkFile(filePath)) {
-			moduleContent = this.generator.engine(
-				this.generator.readFileAsString(this.generator.src._base + '/_module.js'),
-				this.generator
-			);
-			console.log(moduleContent);
+			moduleContent = this.engineFromTpl(config.tplLink);
 		}
 		else {
 			moduleContent = this.generator.readFileAsString(filePath);
-			// if (!contentPattern.test(moduleContent)) {
+			// if (!config.contentPattern.test(moduleContent)) {
 			// 	throw 'The module is not valid';
 			// }
 			this.generator.dest.delete(filePath);
 		}
 
-		var markerPosition = moduleContent.lastIndexOf(';');
+		var markerPosition = moduleContent.lastIndexOf(config.delimiter);
 		moduleContent = [moduleContent.slice(0, markerPosition), contentToInsert, moduleContent.slice(markerPosition)].join('');
 		this.generator.dest.write(filePath, moduleContent);
+	},
+
+	/**
+	 * engineFromTpl
+	 * use the template engine to render any template
+	 * from his lin, relative to the generator path.
+	 * the data used to render is this.generator
+	 * @example
+	 * .engineFromTpl('/_module.js')
+	 * 
+	 * @param  {string} tplLink Link to the template
+	 * @return {string}         Content of the template rendered
+	 */
+	engineFromTpl: function (tplLink) {
+		return this.generator.engine(
+			this.generator.readFileAsString(this.generator.src._base + tplLink),
+			this.generator
+		);
 	},
 
 

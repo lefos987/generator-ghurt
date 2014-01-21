@@ -9,6 +9,6 @@
 	 * [add a description]
 	 *
 	 */
-	.controller('<%= tpl.objectName %>', ['$scope', function () {
+	.controller('<%= tpl.objectName %>', ['$scope', function ($scope) {
 		$scope.msg = 'This is the <%= tpl.objectName %> controller';
 	}])

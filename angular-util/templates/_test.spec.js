@@ -1,5 +1,5 @@
 'use strict';
+/*jshint camelcase: false */
 
-describe('<%= tpl.moduleName %>', function () {
-
+describe('<%= tpl.moduleName %> module', function () {
 });
