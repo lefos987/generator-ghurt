@@ -80,7 +80,7 @@ var common = {
 	 * @return	boolean/string
 	 */
 	checkModuleName: function (name) {
-		return (name === '') ? true : this.checkRequiredModuleName(name);
+		return (name === '') ? true : common.checkRequiredModuleName(name);
 	},
 
 	/**
@@ -98,6 +98,19 @@ var common = {
 		else {
 			return 'The name/path must be in camel case';
 		}
+	},
+
+	/**
+	 * toDashCase
+	 * transform text to dash case
+	 * @example
+	 *  toDashCase('ngRepeat') > 'ng-repeat'
+	 *
+	 * @param  {string} input
+	 * @return {string}
+	 */
+	toDashCase: function (input) {
+		return input.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 	},
 
 	/**
