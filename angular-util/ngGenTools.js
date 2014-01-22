@@ -26,7 +26,7 @@ var getGenericPrompt = function (objectType) {
 	},
 	{
 		type: 'input',
-		message: 'For which module (ex: common/event/popup)?',
+		message: 'Provide a path to the module you want to create (ex: common/event/popup):',
 		validate: common.checkModuleName
 	}];
 };
@@ -41,6 +41,7 @@ var getGenericPrompt = function (objectType) {
  * 	execute:				execute the task to generate an object
  * 	checking:				basic function to test the current folder and files
  * 	module writer:	methods to write or update files
+ * 	util:						basic methods missing from yeoman generator
  * 	commands data:	to get access to command data
  */
 var ngGenTools = {
