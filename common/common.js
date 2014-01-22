@@ -114,6 +114,19 @@ var common = {
 	},
 
 	/**
+	 * capitalise
+	 * transform any string to capitalised
+	 * @example
+	 *  capitalise('ngRepeat') > 'NgRepeat'
+	 *
+	 * @param  {string} input
+	 * @return {string}
+	 */
+	capitalise: function (input) {
+		return input.charAt(0).toUpperCase() + input.slice(1);
+	},
+
+	/**
 	 * merge
 	 * merge two object and return it
 	 * 
