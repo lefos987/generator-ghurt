@@ -2,6 +2,7 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
+var Q = require('q');
 var generatorData = require('./data.js');
 var common = require('../common/common.js');
 
@@ -68,6 +69,43 @@ NgcapGenerator.prototype._hasExtDepend = function _hasExtDepend(mod) {
 	return this.extDependencies.extDepend.indexOf(mod) !== -1;
 };
 
+/**
+ * _runAngularUtil
+ * method that runs the angular-util subgenerator
+ * @param		array			args		params for the subgenerator
+ * @param		function	cb			callback
+ */
+NgcapGenerator.prototype._runAngularUtil = function _runAngularUtil(args, cb) {
+	cb = cb || function () {};
+	this.invoke('capinnovation:angular-util', {args: args}, function () {
+		cb();
+	});
+};
+
+/**
+ * _runAngularUtilPrompt
+ * method that runs the angular-util subgenerator with prompt
+ * @returns a promise obj
+ */
+NgcapGenerator.prototype._runAngularUtilPrompt = function _runAngularUtilPrompt() {
+	this.cb = this.cb || this.async();
+	var prompts = [{
+		type: 'confirm',
+		name: 'continue',
+		message: 'Do you want to generate an object (controller, factory..)?',
+		default: false
+	}];
+	this.prompt(prompts, function (props) {
+		if (props.continue) {
+			this._runAngularUtil([], function () {
+				this._runAngularUtilPrompt();
+			}.bind(this));
+		}
+		else {
+			this.cb();
+		}
+	}.bind(this));
+};
 
 
 /**
@@ -373,13 +411,33 @@ NgcapGenerator.prototype.testFolderInit = function testFolderInit() {
 };
 
 /**
- * vendorFolderInit
+ * vendorFilesInit
  * 
  * Generate the files of the vendor folder (bower.json)
  */
 NgcapGenerator.prototype.vendorFilesInit = function vendorFilesInit() {
 	this.template('vendor/_bower.json', 'dist/vendor/bower.json');
 };
+
+/**
+ * generateDemoObject
+ * 
+ * Generate the files of the vendor folder (bower.json)
+ */
+NgcapGenerator.prototype.generateDemoObject = function generateDemoObject() {
+	if (!!this.basicInfo.quickInstall) {
+		var cb = this.async();
+		this._runAngularUtil(['controller', 'demo/demo'], function () {
+			this._runAngularUtil(['factory', 'demo/demo'], cb);
+		}.bind(this));
+	}
+	else {
+		this._runAngularUtilPrompt();
+	}
+};
+
+
+
 
 /**
  * installDeps
