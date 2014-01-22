@@ -8,8 +8,8 @@
 			scope = $rootScope.$new();
 			<%= tpl.objectName %> = $controller('<%= tpl.objectName %>', {
 				$scope: scope
-			}));
-		});
+			});
+		}));
 		
 		it('should have the msg correctly defined in the scope', function () {
 			scope.$root.$digest();

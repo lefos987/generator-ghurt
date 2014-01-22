@@ -19,7 +19,8 @@
 		return {
 			template: '<div></div>',
 			restrict: 'E',
-			link: function postLink(scope, element, attrs) {
+			link: function postLink(scope, element) {
+				// postLink can have these params: scope, element, attrs
 				element.text('this is the <%= tpl.objectName %> directive');
 			}
 		};
