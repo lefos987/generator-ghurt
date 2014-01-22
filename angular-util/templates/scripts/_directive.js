@@ -21,6 +21,8 @@
 			restrict: 'E',
 			link: function postLink(scope, element) {
 				// postLink can have these params: scope, element, attrs
+				// and in this case the template <div></div> is overwritten
+				// by the element.text
 				element.text('this is the <%= tpl.objectName %> directive');
 			}
 		};

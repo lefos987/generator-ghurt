@@ -1,20 +1,23 @@
 
 	describe('<%= tpl.objectName %> directive', function () {
 
-		var $scope, element, $compile, outerDiv;
+		var $scope, element;
 		
 		beforeEach(module('<%= tpl.moduleName %>'));
-		beforeEach(inject(function (_$compile_, $rootScope) {
-			$scope = $rootScope.$new();
-			$compile = _$compile_;
-			outerDiv = '<<%= tpl.objectNameDash %>><div></div></<%= tpl.objectNameDash %>>';
+		beforeEach(inject(function ($compile, $rootScope) {
+			$scope = $rootScope;
 			element = angular.element('<<%= tpl.objectNameDash %>></<%= tpl.objectNameDash %>>');
 			$compile(element)($scope);
 		}));
 
-		it('should have only one child div', function () {
-			expect(angular.element(element.children()[0]).html()).toBeUndefined();
-			expect(angular.element(element.children()[1]).html()).toBeUndefined();
+		it('shouldn\'t have child div', function () {
+			$scope.$digest();
+			expect(angular.element(element.children()).html()).toBeUndefined();
+		});
+
+		it('should contain the correct text', function () {
+			$scope.$digest();
+			expect(element.text()).toEqual('this is the <%= tpl.objectName %> directive');
 		});
 
 	});
