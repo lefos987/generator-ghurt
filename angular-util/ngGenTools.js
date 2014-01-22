@@ -178,7 +178,13 @@ var ngGenTools = {
 	 * executeTreatment
 	 * make the generic treatment for most of the generator
 	 * commands composed by an object name [and a module name]
-	 * 
+	 * at the end of the execution the generator should have
+	 * a 'tpl' object containing :
+	 *	filePath					path with file name without extension
+	 *	moduleName				module name
+	 *	objectName				object name in camel case
+	 *	objectNameDash		object name in dash case
+	 *	objectNameClass		object name capitalised
 	 */
 	executeTreatment: function () {
 		var pObject, pModule;
@@ -190,7 +196,7 @@ var ngGenTools = {
 		if (typeof params !== 'object' || !params[0]) {
 			throw 'Some arguments are missing';
 		}
-		else if (params[0].indexOf('/') !== -1 && !!params[1] && params[1].indexOf('/') !== -1) {
+		else if (params[0].indexOf('/') !== -1 && !!params[1] && params[1] !== '') {
 			throw 'The location of the new object and module are in conflict';
 		}
 
@@ -214,6 +220,7 @@ var ngGenTools = {
 		}
 		this.generator.tpl.objectName += suffix;
 		this.generator.tpl.objectNameDash = common.toDashCase(this.generator.tpl.objectName);
+		this.generator.tpl.objectNameClass = common.capitalise(this.generator.tpl.objectName);
 	},
 
 	/**
