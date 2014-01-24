@@ -1,4 +1,4 @@
-# generator-capinnovation
+# generator-ghurt
 
 A generator for [Yeoman](http://yeoman.io).
 
