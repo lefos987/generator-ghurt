@@ -77,7 +77,7 @@ You can have Livereload, so at every change the page will be reloaded in your br
 ### test
 Run karma and coverage
 
-### server
+### serve
 Create a simple connect web server for the dist folder. The page should open automatically in your browser.
 
 ### report
