@@ -23,7 +23,10 @@ module.exports = function(config) {
 		],
 
 		// list of files to exclude
-		exclude: [],
+		exclude: [
+			'src/app/app.js',
+			'src/app/templates.js'
+		],
 
 		// test results reporter to use
 		// possible values: dots || progress || growl
