@@ -1,6 +1,6 @@
 # Angular util
 
-AngularJS objects generator, angular-generator like but adapted to our structure.
+AngularJS objects generator, similar to angular-generator but adapted to our structure.
 
 ## How it works?
 
@@ -12,18 +12,18 @@ To create an object, the following parameters are required:
 
 Let say, you want to create a service called 'popupManager', in a module located in 'ui/popup.js'. You can type in your command line (it's quicker)
 ```
-yo capinnovation:angular-util service popupManager ui/popup
+yo ghurt:angular-util service popupManager ui/popup
 ```
 Or you can use the terminal interface by using:
 ```
-yo capinnovation:angular-util
+yo ghurt:angular-util
 ```
 Then a prompter will ask you the type, name and module path.
 
 **Cheat code**: it might happen often that the object name and module name are the same. In that case just provide the path of the module as object name.
 ```
-yo capinnovation:angular-util controller boxes ui/ikea/storage/boxes
-yo capinnovation:angular-util controller ui/ikea/storage/boxes
+yo ghurt:angular-util controller boxes ui/ikea/storage/boxes
+yo ghurt:angular-util controller ui/ikea/storage/boxes
 ```
 These two lines got the same behaviour, the second one is just quicker. This trick works for command line as well as prompt interface.
 

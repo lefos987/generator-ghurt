@@ -1,6 +1,6 @@
 # Hapi server
 
-Hapi server generated with capinnovation generator. Configured to be tested with Jasmine.
+Hapi server generated with `ghurt` generator. Configured to be tested with Jasmine.
 
 ## Repo structure
 
