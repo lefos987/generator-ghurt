@@ -60,7 +60,7 @@ GhurtGenerator.prototype.askInstallType = function askInstallType() {
 			name: 'Server app?',
 			value: 'server'
 		}, {
-			name: 'Server and Client app?',
+			name: 'Client and Server app?',
 			value: 'both'
 		}
 	];
