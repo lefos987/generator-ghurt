@@ -39,6 +39,49 @@ HapiGenerator.prototype._welcome =
 '\n  |  | /--\\ |    | ' +
 '\n  server side -----\n';
 
+/**
+ * Private methods
+ * ------------------------------------------------------------------
+ */
+
+/**
+ * _runHapiUtil
+ * method that runs the hapi-util subgenerator
+ * @param		array			args		params for the subgenerator
+ * @param		function	cb			callback
+ */
+HapiGenerator.prototype._runHapiUtil = function _runHapiUtil(args, cb) {
+	cb = cb || function () {};
+	this.invoke('capinnovation:hapi-util', {args: args}, function () {
+		cb();
+	});
+};
+
+/**
+ * _runHapiUtilPrompt
+ * method that runs the hapi-util subgenerator with prompt
+ * @returns a promise obj
+ */
+HapiGenerator.prototype._runHapiUtilPrompt = function _runHapiUtilPrompt() {
+	this.cb = this.cb || this.async();
+	var prompts = [{
+		type: 'confirm',
+		name: 'continue',
+		message: 'Do you want to generate a route?',
+		default: false
+	}];
+	this.prompt(prompts, function (props) {
+		if (props.continue) {
+			this._runHapiUtil([], function () {
+				this._runHapiUtilPrompt();
+			}.bind(this));
+		}
+		else {
+			this.cb();
+		}
+	}.bind(this));
+};
+
 
 /**
  * Public methods / prompt scripts
@@ -250,6 +293,23 @@ HapiGenerator.prototype.srcFolderInit = function srcFolderInit() {
 	this.copy('src/indexRoutes.js', 'src/api/index/indexRoutes.js');
 	this.copy('src/logger.js', 'src/api/util/logger.js');
 	this.copy('src/en_GB.json', 'src/error_messages/en_GB.json');
+};
+
+/**
+ * generateDemoObject
+ * 
+ * Generate the files of the vendor folder (bower.json)
+ */
+HapiGenerator.prototype.generateDemoObject = function generateDemoObject() {
+	if (!!this.basicInfo.quickInstall) {
+		var cb = this.async();
+		this._runHapiUtil(['GET', 'demo/foo'], function () {
+			this._runHapiUtil(['GET', 'demo/bar'], cb);
+		}.bind(this));
+	}
+	else {
+		this._runHapiUtilPrompt();
+	}
 };
 
 /**
