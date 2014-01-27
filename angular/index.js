@@ -2,7 +2,6 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
-var Q = require('q');
 var generatorData = require('./data.js');
 var common = require('../common/common.js');
 
