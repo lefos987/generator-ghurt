@@ -117,6 +117,8 @@ var hapiGenTools = {
 		this.writeScript();
 		this.writeRouter();
 		this.updateIndex();
+
+		this.reset();
 	},
 
 	/**
@@ -214,13 +216,21 @@ var hapiGenTools = {
 	 * write the unit test file
 	 */
 	updateIndex: function () {
-		if (!!this.ended) {
-			return;
+		if (!this.ended) {
+			this.insert('server.js', [
+				{tpl: 'index/_require', marker: 'require'},
+				{tpl: 'index/_route', marker: 'route'}
+			]);
 		}
-		this.insert('server.js', [
-			{tpl: 'index/_require', marker: 'require'},
-			{tpl: 'index/_route', marker: 'route'}
-		]);
+	},
+
+	/**
+	 * Reset
+	 * reset the generator
+	 * 
+	 */
+	reset: function () {
+		this.ended = null;
 	},
 
 
