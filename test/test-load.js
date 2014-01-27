@@ -3,7 +3,7 @@
 
 var assert = require('assert');
 
-describe('capinnovation generator', function () {
+describe('ghurt generator', function () {
     it('can be imported without blowing up', function () {
         var app = require('../app');
         assert(app !== undefined);

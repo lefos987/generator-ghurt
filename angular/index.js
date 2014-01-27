@@ -77,7 +77,7 @@ NgcapGenerator.prototype._hasExtDepend = function _hasExtDepend(mod) {
  */
 NgcapGenerator.prototype._runAngularUtil = function _runAngularUtil(args, cb) {
 	cb = cb || function () {};
-	this.invoke('capinnovation:angular-util', {args: args}, function () {
+	this.invoke('ghurt:angular-util', {args: args}, function () {
 		cb();
 	});
 };

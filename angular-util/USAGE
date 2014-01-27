@@ -16,19 +16,19 @@ Params:
         is the name/link to the module
 
 Example:
-    yo capinnovation:angular-util <object type> <object name> [module link]
+    yo ghurt:angular-util <object type> <object name> [module link]
     
-    yo capinnovation:angular-util service popup
+    yo ghurt:angular-util service popup
     This will create or update:
         src/app/popup.js
         test/unit/app/popup.spec.js
 
-    yo capinnovation:angular-util service common/popup
+    yo ghurt:angular-util service common/popup
     This will create or update:
         src/app/common/popup.js
         test/unit/app/common/popup.spec.js
 
-    yo capinnovation:angular-util service popup widget/utils
+    yo ghurt:angular-util service popup widget/utils
     This will create or update:
         src/app/widget/utils.js
         test/unit/app/widget/utils.spec.js

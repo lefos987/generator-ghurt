@@ -24,7 +24,7 @@ This package is a Yeoman generator, so you will first need to install `yo` on yo
 $ npm install -g yo
 ```
 
-Then install generator-capinnovation from npm, run:
+Then install generator-ghurt from npm, run:
 
 ```
 $ npm install -g generator-ghurt

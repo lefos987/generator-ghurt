@@ -6,14 +6,14 @@ var Q = require('q');
 var common = require('../common/common');
 var generatorData = require('./data');
 
-var CapinnovationGenerator = module.exports = function CapinnovationGenerator(args, options, config) {
+var GhurtGenerator = module.exports = function GhurtGenerator(args, options, config) {
 	yeoman.generators.Base.apply(this, arguments);
 	
 	// Commented out as a placeholder for possible future use
 	// this.on('end', function() {});
 };
 
-util.inherits(CapinnovationGenerator, yeoman.generators.Base);
+util.inherits(GhurtGenerator, yeoman.generators.Base);
 
 
 /**
@@ -26,7 +26,7 @@ util.inherits(CapinnovationGenerator, yeoman.generators.Base);
  * 
  * Say hello and setup the default data
  */
-CapinnovationGenerator.prototype.welcome = function welcome() {
+GhurtGenerator.prototype.welcome = function welcome() {
 	if (!this.options['skip-welcome-message']) {
 		console.log(this.yeoman);
 	}
@@ -43,7 +43,7 @@ CapinnovationGenerator.prototype.welcome = function welcome() {
  * This method is common to all generators 
  * The default basicInfo data is set in the welcome method
  */
-CapinnovationGenerator.prototype.askBasic = common.askBasic;
+GhurtGenerator.prototype.askBasic = common.askBasic;
 
 /**
  * askInstallItype
@@ -51,7 +51,7 @@ CapinnovationGenerator.prototype.askBasic = common.askBasic;
  * Ask what kind of app we need to install (client and/or server)
  * then add it to basicInfo
  */
-CapinnovationGenerator.prototype.askInstallType = function askInstallType() {
+GhurtGenerator.prototype.askInstallType = function askInstallType() {
 	var cb = this.async();
 	var choices = [{
 			name: 'Client app?',
@@ -95,7 +95,7 @@ CapinnovationGenerator.prototype.askInstallType = function askInstallType() {
  *	and select the preferred one
  *	3. when you select both it should again display the above options.
  */
-CapinnovationGenerator.prototype.createStructure = function createStructure() {
+GhurtGenerator.prototype.createStructure = function createStructure() {
 	var cb = this.async();
 	var basicInfo;
 	switch (this.basicInfo.installType) {
@@ -140,7 +140,7 @@ CapinnovationGenerator.prototype.createStructure = function createStructure() {
  * 
  * Attach the README.md file to the root of the project
  */
-CapinnovationGenerator.prototype.addReadme = function addReadme() {
+GhurtGenerator.prototype.addReadme = function addReadme() {
 	this.template('_readme.md', 'README.md');
 };
 
@@ -152,7 +152,7 @@ CapinnovationGenerator.prototype.addReadme = function addReadme() {
  * 2. copy the pre-commit and pre-push git hooks in order to ensure quality of the code
  * before code is pushed.
  */
-CapinnovationGenerator.prototype.gitConfig = function gitConfig() {
+GhurtGenerator.prototype.gitConfig = function gitConfig() {
 	this.spawnCommand('git', ['init']);
 	this.template('gitHooks/_pre-commit', '.git/hooks/pre-commit');
 	this.copy('gitHooks/pre-push', '.git/hooks/pre-push');
@@ -165,7 +165,7 @@ CapinnovationGenerator.prototype.gitConfig = function gitConfig() {
  * #NOTE: Created as a separate method to ensure that it will run synchronously after the
  * files are copied
  */
-CapinnovationGenerator.prototype.gitHookRights = function gitHookRights() {
+GhurtGenerator.prototype.gitHookRights = function gitHookRights() {
 	this.spawnCommand('chmod', ['-R', '755', '.git/hooks']);
 };
 
@@ -182,13 +182,13 @@ CapinnovationGenerator.prototype.gitHookRights = function gitHookRights() {
  * @param		object		basicInfo		basic options(eg. name) that we want to pass to the subgenerator
  * @returns a promise obj
  */
-CapinnovationGenerator.prototype._runSubGenerator = function _runSubGenerator(subgen, basicInfo) {
+GhurtGenerator.prototype._runSubGenerator = function _runSubGenerator(subgen, basicInfo) {
 	var deferred = Q.defer();
 	var options = {
 		'skip-welcome-message': true,
 		basicInfo: basicInfo
 	};
-	this.invoke('capinnovation:' + subgen, {options: options}, function () {
+	this.invoke('ghurt:' + subgen, {options: options}, function () {
 		deferred.resolve();
 	});
 	return deferred.promise;
