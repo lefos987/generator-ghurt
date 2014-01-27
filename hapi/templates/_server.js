@@ -1,8 +1,9 @@
 'use strict';
 
-var Hapi = require('hapi'),
-		config = require('./config'),
-		indexRoutes = require('./src/api/index/indexRoutes');
+var Hapi = require('hapi');
+var config = require('./config');
+var indexRoutes = require('./src/api/index/indexRoutes');
+//mk:require
 
 var options = {
 	cors: true,
@@ -19,6 +20,7 @@ var probe = new Flod.Probe(server, {server: 'hapi', version: '<%= npmDependencie
 <%}%>
 
 server.route(indexRoutes);
+//mk:route
 
 server.start();
 console.log('Hapi server running in port ' + config.port);
