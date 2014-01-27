@@ -1,0 +1,7 @@
+var <%= tpl.routeName %>Config = {
+	method: '<%= tpl.method %>',
+	path: '/api<%= tpl.route %>',
+	config: {
+		handler: <%= tpl.routeName %>.<%= tpl.routeName %>Handler
+	}
+};

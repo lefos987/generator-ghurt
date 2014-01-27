@@ -1,0 +1,1 @@
+var <%= tpl.routeName %> = require('./<%= tpl.routeName %>/<%= tpl.routeName %>');

@@ -1,0 +1,1 @@
+var <%= tpl.routeName %> = require('./src/api/<%= tpl.actionScript %>');
