@@ -74,5 +74,5 @@ NgcapToolsGenerator.prototype.askCommandParameters = function askCommandParamete
  * we can start to build the content
  */
 NgcapToolsGenerator.prototype.treatment = function treatment() {
-	ngGenTools.execute(this);
+	ngGenTools.execute();
 };
