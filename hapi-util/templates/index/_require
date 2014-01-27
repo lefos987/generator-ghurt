@@ -1,1 +1,1 @@
-var <%= tpl.routeName %> = require('./src/api/<%= tpl.actionScript %>');
+var <%= tpl.action %>Routes = require('./src/api/<%= tpl.actionScript %>');
