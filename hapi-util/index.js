@@ -76,6 +76,5 @@ hapiToolsGenerator.prototype.askRoute = function askRoute() {
  * we can start to build the content
  */
 hapiToolsGenerator.prototype.treatment = function treatment() {
-	console.log('>>> ' + this.method + ' ' + this.route);
 	hapiGenTools.execute();
 };
