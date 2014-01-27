@@ -221,6 +221,7 @@ HapiGenerator.prototype.createStructure = function createStructure() {
 	this.mkdir('src');
 	this.mkdir('src/api');
 	this.mkdir('src/api/index');
+	this.mkdir('src/api/util');
 	this.mkdir('src/error_messages');
 	this.mkdir('test');
 	this.mkdir('test/api');
@@ -247,6 +248,7 @@ HapiGenerator.prototype.rootFilesInit = function rootFilesInit() {
  */
 HapiGenerator.prototype.srcFolderInit = function srcFolderInit() {
 	this.copy('src/indexRoutes.js', 'src/api/index/indexRoutes.js');
+	this.copy('src/logger.js', 'src/api/util/logger.js');
 	this.copy('src/en_GB.json', 'src/error_messages/en_GB.json');
 };
 
