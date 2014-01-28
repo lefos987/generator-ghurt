@@ -18,7 +18,7 @@ var <%= tpl.routeName %> = {
 
 		// Logging when a new request is received
 		logger.log('info', '<%= tpl.routeName %>: New request received', {
-			tags: ['cm_info'],
+			tags: ['app_info'],
 			method: '<%= tpl.routeName %>'
 		});
 

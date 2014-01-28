@@ -41,9 +41,23 @@ var hapiGenTools = {
 	methods: [
 		'GET',
 		'POST',
-		'UPDATE',
-		'DELETE'
+		'PUT',
+		'PATCH',
+		'DELETE',
+		'COPY',
+		'HEAD',
+		'OPTIONS',
+		'LINK',
+		'UNLINK',
+		'PURGE'
 	],
+
+	/**
+	 * File content caching system
+	 * ready to be saved
+	 * @type {Object}
+	 */
+	fileCache: {},
 
 
 	/**
@@ -62,6 +76,9 @@ var hapiGenTools = {
 		this.generator = generator;
 		this.checkCurrentPath();
 		this.setUpAttributes();
+
+		// We force all overwriting
+		this.generator.conflicter.force = true;
 	},
 
 	/**
@@ -119,6 +136,9 @@ var hapiGenTools = {
 		this.updateIndex();
 
 		this.reset();
+		if (!this.installMod) {
+			this.writeFiles();
+		}
 	},
 
 	/**
@@ -174,6 +194,24 @@ var hapiGenTools = {
 		this.generator.tpl = this.tpl;
 	},
 
+	/**
+	 * install
+	 * script to create routes form routes.js
+	 *
+	 */
+	install: function () {
+		var route;
+		var conf = require(this.generator.dest._base + '/routes.js');
+		for (var i = 0; i < conf.length; i++) {
+			route = conf[i];
+			this.generator.method = route.method;
+			this.generator.route = route.route;
+			this.execute();
+		}
+		this.writeFiles();
+		console.log('Done. ' + i + ' route(s) created.');
+	},
+
 
 	/**
 	 * Module writer
@@ -188,8 +226,8 @@ var hapiGenTools = {
 	 * write the object script
 	 */
 	writeScript: function () {
-		this.generator.template('_script.js', this.scriptPath + this.tpl.routePath + '.js');
-		this.generator.template('_test.spec.js', this.testPath + this.tpl.routePath + '.spec.js');
+		this.template('_script.js', this.scriptPath + this.tpl.routePath + '.js');
+		this.template('_test.spec.js', this.testPath + this.tpl.routePath + '.spec.js');
 	},
 
 	/**
@@ -207,7 +245,7 @@ var hapiGenTools = {
 			this.ended = true;
 		}
 		else {
-			this.generator.template('_router.js', routerPath);
+			this.template('_router.js', routerPath);
 		}
 	},
 
@@ -224,15 +262,6 @@ var hapiGenTools = {
 		}
 	},
 
-	/**
-	 * Reset
-	 * reset the generator
-	 * 
-	 */
-	reset: function () {
-		this.ended = null;
-	},
-
 
 	/**
 	 * Utils
@@ -247,17 +276,15 @@ var hapiGenTools = {
 	 * @param  {[array]} config     Array of object {tpl, marker}
 	 */
 	insert: function (filePath, config) {
-
-		filePath = this.generator.dest._base + '/' + filePath;
-		console.log(filePath);
-		var content = this.generator.readFileAsString(filePath);
-		var currentConf;
+		var content, currentConf;
+		content = (!!this.fileCache[filePath]) ? this.fileCache[filePath] : this.generator.readFileAsString(filePath);
+		
 		for (var i in config) {
 			currentConf = config[i];
 			content = this.insertIn(content, currentConf.tpl, currentConf.marker);
 		}
-		this.generator.dest.delete(filePath);
-		this.generator.dest.write(filePath, content);
+		
+		this.fileCache[filePath] = content;
 	},
 
 	/**
@@ -268,7 +295,6 @@ var hapiGenTools = {
 	 * @param		String	contentToInsert		Content to add in the module
 	 */
 	insertIn: function (content, tplLink, marker) {
-		// var markerPosition = content.lastIndexOf(this.tplMarker + marker);
 		var contentToInsert = this.engineFromTpl(tplLink);
 		var newContent = content.replace(new RegExp(' *' + this.tplMarker + marker), contentToInsert + '$&');
 
@@ -276,11 +302,6 @@ var hapiGenTools = {
 			throw 'Marker "' + marker + '" not found';
 		}
 		return newContent;
-
-		// if (markerPosition === -1) {
-		// 	throw 'Marker "' + marker + '" not found';
-		// }
-		// return [content.slice(0, markerPosition), contentToInsert, content.slice(markerPosition)].join('');
 	},
 
 	/**
@@ -299,6 +320,41 @@ var hapiGenTools = {
 			this.generator.readFileAsString(this.generator.src._base + '/' + tplLink),
 			this.generator
 		);
+	},
+
+	/**
+	 * template
+	 * layer at the top of generator.template
+	 * the idea is to use the local file content 
+	 * storage instead of writing directly the file
+	 * on the repo
+	 * 
+	 * @param  {[string]} tplLink  Template link
+	 * @param  {[string]} filePath Location of the final file
+	 */
+	template: function (tplLink, filePath) {
+		this.fileCache[filePath] = this.engineFromTpl(tplLink);
+	},
+
+	/**
+	 * writeFiles
+	 * use the local storage to write all
+	 * the files in the path.
+	 * 
+	 */
+	writeFiles: function () {
+		for (var filePath in this.fileCache) {
+			this.generator.dest.write(filePath, this.fileCache[filePath]);
+		}
+	},
+
+	/**
+	 * Reset
+	 * reset the generator
+	 * 
+	 */
+	reset: function () {
+		this.ended = null;
 	},
 
 
@@ -329,6 +385,10 @@ var hapiGenTools = {
 	 * @return	boolean
 	 */
 	checkFile: function (filePath, errorLabel) {
+		if (!!this.fileCache[filePath]) {
+			return true;
+		}
+
 		var testFile;
 		var failCase = function () {
 			if (!!errorLabel) {
@@ -374,8 +434,6 @@ var hapiGenTools = {
 			return 'A route might not be in camelCase (ex: /hello/{world})';
 		}
 	}
-
-
 };
 
 module.exports = hapiGenTools;

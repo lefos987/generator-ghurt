@@ -35,7 +35,7 @@ describe('<%= tpl.routeName %> controller', function () {
 			<%= tpl.routeName %>.<%= tpl.routeName %>Handler(requestMock, responseMock);
 			expect(logStub.called).toBe(true);
 			expect(logStub.args[0][0]).toEqual('info');
-			expect(logStub.args[0][2].tags).toEqual(['cm_info']);
+			expect(logStub.args[0][2].tags).toEqual(['app_info']);
 			expect(logStub.args[0][2].method).toEqual('<%= tpl.routeName %>');
 		});
 

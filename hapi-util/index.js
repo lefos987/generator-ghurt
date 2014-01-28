@@ -7,9 +7,13 @@ var hapiGenTools = require('./hapiGenTools.js');
  * hapiToolsGenerator
  * 
  */
-var hapiToolsGenerator = module.exports = function hapiToolsGenerator() {
+var hapiToolsGenerator = module.exports = function hapiToolsGenerator(args, options) {
 	yeoman.generators.Base.apply(this, arguments);
 	hapiGenTools.init(this);
+
+	if (!!options.install) {
+		this.installMod = true;
+	}
 };
 
 util.inherits(hapiToolsGenerator, yeoman.generators.Base);
@@ -24,7 +28,7 @@ hapiToolsGenerator.prototype.askMethod = function askmethod() {
 
 	// Check if the method is not already set via
 	// generator arguments
-	if (!!this.method) {
+	if (!!this.method || !!this.installMod) {
 		return;
 	}
 
@@ -51,7 +55,7 @@ hapiToolsGenerator.prototype.askRoute = function askRoute() {
 
 	// Check if the route is not already set via
 	// generator arguments
-	if (!!this.route) {
+	if (!!this.route || !!this.installMod) {
 		return;
 	}
 
@@ -76,5 +80,10 @@ hapiToolsGenerator.prototype.askRoute = function askRoute() {
  * we can start to build the content
  */
 hapiToolsGenerator.prototype.treatment = function treatment() {
-	hapiGenTools.execute();
+	if (!!this.installMod) {
+		hapiGenTools.install();
+	}
+	else {
+		hapiGenTools.execute();
+	}
 };
