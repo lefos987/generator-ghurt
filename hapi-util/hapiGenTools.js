@@ -91,7 +91,7 @@ var hapiGenTools = {
 		// Get the method
 		if (this.generator.args.length > 0) {
 			var method = this.generator.args.shift().toUpperCase();
-			if (!!this.checkMethod(method)) {
+			if (!!this.checkHttpVerb(method)) {
 				this.generator.method = method;
 			} else {
 				console.log('This generator does not allowed "' + method + '" method.');
@@ -271,9 +271,11 @@ var hapiGenTools = {
 	/**
 	 * insert
 	 * insert rendered templates into a file
+	 * config parameter is an array of object which contain
+	 * the config for each marker
 	 * 
 	 * @param  {[string]} filePath  Path of the file to update
-	 * @param  {[array]} config     Array of object {tpl, marker}
+	 * @param  {[array]}  config    Array of object {tpl, marker}
 	 */
 	insert: function (filePath, config) {
 		var content, currentConf;
@@ -281,23 +283,24 @@ var hapiGenTools = {
 		
 		for (var i in config) {
 			currentConf = config[i];
-			content = this.insertIn(content, currentConf.tpl, currentConf.marker);
+			content = this.insertTemplate(content, currentConf.tpl, currentConf.marker);
 		}
 		
 		this.fileCache[filePath] = content;
 	},
 
 	/**
-	 * insertIn
+	 * insertTemplate
 	 * insert content into the module
 	 * if the file does not exists, the script generate it
 	 * 
 	 * @param		String	contentToInsert		Content to add in the module
 	 */
-	insertIn: function (content, tplLink, marker) {
+	insertTemplate: function (content, tplLink, marker) {
 		var contentToInsert = this.engineFromTpl(tplLink);
 		var newContent = content.replace(new RegExp(' *' + this.tplMarker + marker), contentToInsert + '$&');
 
+		// Might give troubles if a template is used more than once
 		if (newContent.length !== content.length + contentToInsert.length) {
 			throw 'Marker "' + marker + '" not found';
 		}
@@ -406,7 +409,7 @@ var hapiGenTools = {
 	},
 
 	/**
-	 * checkMethod
+	 * checkHttpVerb
 	 * validation method to check if a request method
 	 * is allowed
 	 * return true if the method is allowed
@@ -414,7 +417,7 @@ var hapiGenTools = {
 	 * @param	{string} method	
 	 * @return {boolean}
 	 */
-	checkMethod: function (method) {
+	checkHttpVerb: function (method) {
 		return this.methods.indexOf(method) !== -1;
 	},
 
