@@ -76,7 +76,7 @@ NgcapGenerator.prototype._hasExtDepend = function _hasExtDepend(mod) {
  */
 NgcapGenerator.prototype._runAngularUtil = function _runAngularUtil(args, cb) {
 	cb = cb || function () {};
-	this.invoke('capinnovation:angular-util', {args: args}, function () {
+	this.invoke('ghurt:angular-util', {args: args}, function () {
 		cb();
 	});
 };
@@ -161,7 +161,7 @@ NgcapGenerator.prototype.askGeneral = function askGeneral() {
 	var prompts = [{
 		type: 'input',
 		name: 'connectServerPort',
-		message: 'What\'s the port of your livereload server?',
+		message: 'What port do yo want your livereload server to run on?',
 		default: this.basicInfo.connectServerPort,
 		validate: common.checkPort
 	}, {

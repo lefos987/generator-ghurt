@@ -313,7 +313,7 @@ module.exports = function (grunt) {
 		'coverage'
 	]);
 
-	grunt.registerTask('server', ['connect:server']);
+	grunt.registerTask('serve', ['connect:server']);
 
 	grunt.registerTask('report', [
 		'clean:other',

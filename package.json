@@ -1,14 +1,14 @@
 {
-  "name": "generator-capinnovation",
-  "version": "0.2.1",
+  "name": "generator-ghurt",
+  "version": "0.3.5",
   "description": "A Yeoman generator for AngularJS + HapiJS stack",
   "keywords": [
     "yeoman-generator",
     "angular",
     "hapi"
   ],
-  "homepage": "https://github.com/lefos987/generator-capinnovation",
-  "bugs": "https://github.com/lefos987/generator-capinnovation/issues",
+  "homepage": "https://github.com/lefos987/generator-ghurt",
+  "bugs": "https://github.com/lefos987/generator-ghurt/issues",
   "author": {
     "name": "Capgemini Digital Innovation Lab",
     "url": "https://github.com/lefos987"
@@ -16,7 +16,7 @@
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/lefos987/generator-capinnovation.git"
+    "url": "git://github.com/lefos987/generator-ghurt.git"
   },
   "dependencies": {
     "yeoman-generator": "~0.14.0",

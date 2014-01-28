@@ -1,6 +1,6 @@
 # Angular app
 
-AngularJS app generated with capinnovation generator. Configured to work with SCSS for styling, and tested with Karma.
+AngularJS app generated with `ghurt` generator. Configured to work with SCSS for styling, and tested with Karma.
 
 ## Project Structure
 Although the [angular-seed](https://github.com/angular/angular-seed) project is a starting point for many Angular apps in the wild, we follow a different approach that we believe makes our apps much more scalable and maintenable. It is based on Pete Bacon Darwin's and Pawel Kozlowski's approach to [building a basic Angular CRUD app](https://github.com/angular-app/angular-app) (HIGHLY RECOMMENDED!). Instead of creating long `controllers.js`, `directives.js` etc files that easily grow out of control, we organize our project into modules based on the functionality of our app.
@@ -77,7 +77,7 @@ You can have Livereload, so at every change the page will be reloaded in your br
 ### test
 Run karma and coverage
 
-### server
+### serve
 Create a simple connect web server for the dist folder. The page should open automatically in your browser.
 
 ### report

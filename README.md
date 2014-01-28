@@ -1,4 +1,4 @@
-# generator-capinnovation
+# generator-ghurt
 
 A generator for [Yeoman](http://yeoman.io).
 
@@ -24,25 +24,25 @@ This package is a Yeoman generator, so you will first need to install `yo` on yo
 $ npm install -g yo
 ```
 
-Then install generator-capinnovation from npm, run:
+Then install generator-ghurt from npm, run:
 
 ```
-$ npm install -g generator-capinnovation
+$ npm install -g generator-ghurt
 ```
 
 Finally, initiate the generator in the repo you want:
 
 ```
-$ yo capinnovation
+$ yo ghurt
 ```
 
 If you only want to run a subgenerator:
 
 ```
-$ yo capinnovation:angular #for the angular subgenerator
+$ yo ghurt:angular #for the angular subgenerator
 ```
 ```
-$ yo capinnovation:hapi #for the hapijs subgenerator
+$ yo ghurt:hapi #for the hapijs subgenerator
 ```
 
 ## Then..

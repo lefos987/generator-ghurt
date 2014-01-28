@@ -7,7 +7,7 @@ var generatorData = {
 			name: '',
 			description: '',
 			version: '0.0.1',
-			author: 'Capgemini Innovation',
+			author: 'You name',
 			repo: '',
 			license: '',
 			pathPrefix: ''

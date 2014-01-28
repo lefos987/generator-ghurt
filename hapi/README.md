@@ -1,6 +1,6 @@
 # Hapi server
 
-Hapi server generated with capinnovation generator. Configured to be tested with Jasmine.
+Hapi server generated with `ghurt` generator. Configured to be tested with Jasmine.
 
 ## Repo structure
 
@@ -52,7 +52,7 @@ Develop is the task to run during the development process. It keeps watching the
 ### test
 Run jasmine_node to test scripts.
 
-### server
+### serve
 Start server by running server.js
 
 ### report

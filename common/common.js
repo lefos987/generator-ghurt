@@ -177,11 +177,11 @@ var common = {
 			type: 'input',
 			name: 'author',
 			message: 'Who is the author?',
-			default: this.basicInfo.author
+			validate: common.checkRequired
 		}, {
 			type: 'input',
 			name: 'repo',
-			message: 'What is the GitHub/Stash repo?',
+			message: 'What is the home URL of the GIT repo?',
 			default: this.basicInfo.repo
 		}, {
 			type: 'list',
