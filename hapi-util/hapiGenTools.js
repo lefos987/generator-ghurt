@@ -45,6 +45,7 @@ var hapiGenTools = {
 	 * @type {Array}
 	 */
 	methods: [
+		'*',
 		'GET',
 		'POST',
 		'PUT',
@@ -76,8 +77,8 @@ var hapiGenTools = {
 		this.checkCurrentPath();
 		this.setUpAttributes();
 
-		// We force all overwriting
-		this.generator.conflicter.force = true;
+		// Force overwriting if requested
+		this.generator.conflicter.force = !!this.generator.options.force;
 	},
 
 	/**
@@ -155,7 +156,7 @@ var hapiGenTools = {
 	 * @return {[type]} [description]
 	 */
 	executeTreatment: function () {
-		var method = this.generator.method.toLowerCase();
+		var method = this.generator.method.replace('*', 'all').toLowerCase();
 		var route = this.generator.route;
 
 		// Transform
