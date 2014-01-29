@@ -7,7 +7,9 @@
  */
 
 var common = require('../common/common.js');
+var utilBase = require('../common/util-base');
 var chalk = require('chalk');
+
 
 /**
  * getGenericPrompt
@@ -31,6 +33,7 @@ var getGenericPrompt = function (objectType) {
 	}];
 };
 
+
 /**
  * ngGenTools object
  * @type Object
@@ -39,9 +42,8 @@ var getGenericPrompt = function (objectType) {
  * 	constants:			set the settings about the generator
  * 	init:						init the object with command settings
  * 	execute:				execute the task to generate an object
- * 	checking:				basic function to test the current folder and files
  * 	module writer:	methods to write or update files
- * 	util:						basic methods missing from yeoman generator
+ * 	checking:				basic function to test the current folder
  * 	commands data:	to get access to command data
  */
 var ngGenTools = {
@@ -95,23 +97,6 @@ var ngGenTools = {
 		}
 	},
 
-	/**
-	 * Settings of file type
-	 * @type {Object}
-	 */
-	fileTypes: {
-		module: {
-			delimiter: ';',
-			contentPattern: '',
-			tplLink: '/_module.js'
-		},
-		test: {
-			delimiter: '});',
-			contentPattern: '',
-			tplLink: '/_test.spec.js'
-		}
-	},
-
 
 	/**
 	 * Init
@@ -127,7 +112,11 @@ var ngGenTools = {
 	 */
 	init: function (generator) {
 		this.generator = generator;
+		this.checkCurrentPath();
 		this.setUpAttributes();
+
+		// We force all overwriting
+		this.generator.conflicter.force = true;
 	},
 
 	/**
@@ -191,7 +180,6 @@ var ngGenTools = {
 		var pObject, pModule;
 		var params = this.generator.commandParams;
 		var suffix = this.commands[this.generator.command].objectSuffix;
-		this.checkCurrentPath();
 
 		// Param tests
 		if (typeof params !== 'object' || !params[0]) {
@@ -232,13 +220,66 @@ var ngGenTools = {
 	executeWriting: function () {
 		var commandConfig = this.commands[this.generator.command];
 
-		// Write files
+		// Create/update files
 		this.writeScript();
 		this.writeTest();
-
 		if (commandConfig.generateView) {
 			this.writeView();
 		}
+
+		// Write files
+		this.writeFiles();
+	},
+
+
+	/**
+	 * Module writer
+	 * ------------------------------------------------------------------
+	 * these methods require 2 variables from the generator
+	 * .command (object type to generate)
+	 * .tpl (variables relatives to the object to generate)
+	 */
+	
+	/**
+	 * writeScript
+	 * write the object script
+	 */
+	writeScript: function () {
+		var filePath = this.scriptPath + this.generator.tpl.filePath + '.js';
+
+		if (!this.checkFile(filePath)) {
+			this.template('_module.js', filePath);
+		}
+		this.insert(filePath, [
+			{tpl: '/scripts/_' + this.generator.command + '.js', marker: 'module'}
+		]);
+
+		console.log(chalk.bold.yellow('Think to add your module \'' + this.generator.tpl.moduleName + '\' as dependency'));
+	},
+
+	/**
+	 * writeView
+	 * write the view file
+	 */
+	writeView: function () {
+		var filePath = this.scriptPath + this.generator.tpl.filePath + '.view.html';
+		this.template('_view.html', filePath);
+	},
+
+	/**
+	 * writeTest
+	 * write the unit test file
+	 */
+	writeTest: function () {
+		var filePath = this.testPath + this.generator.tpl.filePath + '.spec.js';
+		
+		// Generate the module file if it does not exists
+		if (!this.checkFile(filePath)) {
+			this.template('_test.spec.js', filePath);
+		}
+		this.insert(filePath, [
+			{tpl: '/tests/_' + this.generator.command + '.spec.js', marker: 'test'}
+		]);
 	},
 
 
@@ -258,125 +299,6 @@ var ngGenTools = {
 		var testFile = this.scriptPath + 'app.js';
 		var errorLabel = 'The current path is not correct. Please move to the root folder of the Angular app.';
 		return ngGenTools.checkFile(testFile, errorLabel);
-	},
-
-	/**
-	 * checkFile
-	 * validation method to check if a file exists
-	 *
-	 * @param		string			filePath		Path to the file
-	 * @param		string			errorLabel	Error label in case (if undefined it won't throw any error)
-	 * @return	boolean
-	 */
-	checkFile: function (filePath, errorLabel) {
-		var testFile;
-		var failCase = function () {
-			if (!!errorLabel) {
-				throw errorLabel;
-			}
-			return false;
-		};
-		try {
-			testFile = this.generator.readFileAsString(filePath);
-			return (!testFile || testFile === '') ? failCase() : true;
-		}
-		catch (error) {
-			return failCase();
-		}
-	},
-
-
-	/**
-	 * Module writer
-	 * ------------------------------------------------------------------
-	 * these methods require 2 variables from the generator
-	 * .command (object type to generate)
-	 * .tpl (variables relatives to the object to generate)
-	 */
-	
-	/**
-	 * writeScript
-	 * write the object script
-	 */
-	writeScript: function () {
-		var filePath = this.scriptPath + this.generator.tpl.filePath + '.js';
-		var objectContent = this.engineFromTpl('/scripts/_' + this.generator.command + '.js');
-		this.insertIn('module', filePath, objectContent);
-
-		console.log(chalk.bold.yellow('Think to add your module \'' + this.generator.tpl.moduleName + '\' as dependency'));
-	},
-
-	/**
-	 * writeView
-	 * write the view file
-	 */
-	writeView: function () {
-		var filePath = this.scriptPath + this.generator.tpl.filePath + '.view.html';
-		this.generator.template('_view.html', filePath);
-	},
-
-	/**
-	 * writeTest
-	 * write the unit test file
-	 */
-	writeTest: function () {
-		var filePath = this.testPath + this.generator.tpl.filePath + '.spec.js';
-		var objectContent = this.engineFromTpl('/tests/_' + this.generator.command + '.spec.js');
-		this.insertIn('test', filePath, objectContent);
-	},
-
-
-	/**
-	 * Utils
-	 * ------------------------------------------------------------------
-	 */
-
-	/**
-	 * insertIn
-	 * insert content into the module
-	 * if the file does not exists, the script generate it
-	 * 
-	 * @param		String	contentToInsert		Content to add in the module
-	 */
-	insertIn: function (fileType, filePath, contentToInsert) {
-
-		// Load file config
-		var config = this.fileTypes[fileType];
-		var moduleContent;
-
-		// Generate the module file if it does not exists
-		if (!this.checkFile(filePath)) {
-			moduleContent = this.engineFromTpl(config.tplLink);
-		}
-		else {
-			moduleContent = this.generator.readFileAsString(filePath);
-			// if (!config.contentPattern.test(moduleContent)) {
-			// 	throw 'The module is not valid';
-			// }
-			this.generator.dest.delete(filePath);
-		}
-
-		var markerPosition = moduleContent.lastIndexOf(config.delimiter);
-		moduleContent = [moduleContent.slice(0, markerPosition), contentToInsert, moduleContent.slice(markerPosition)].join('');
-		this.generator.dest.write(filePath, moduleContent);
-	},
-
-	/**
-	 * engineFromTpl
-	 * use the template engine to render any template
-	 * from his lin, relative to the generator path.
-	 * the data used to render is this.generator
-	 * @example
-	 * .engineFromTpl('/_module.js')
-	 * 
-	 * @param  {string} tplLink Link to the template
-	 * @return {string}         Content of the template rendered
-	 */
-	engineFromTpl: function (tplLink) {
-		return this.generator.engine(
-			this.generator.readFileAsString(this.generator.src._base + tplLink),
-			this.generator
-		);
 	},
 
 
@@ -418,5 +340,8 @@ var ngGenTools = {
 		return prompt;
 	}
 };
+
+// Merge the base and our new tools
+ngGenTools = common.merge(utilBase, ngGenTools);
 
 module.exports = ngGenTools;

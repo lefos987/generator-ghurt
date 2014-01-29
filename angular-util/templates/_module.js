@@ -9,4 +9,5 @@
  * [add a description]
  *
  */
-angular.module('<%= tpl.moduleName %>', []);
+angular.module('<%= tpl.moduleName %>', []) //mk:module
+;
