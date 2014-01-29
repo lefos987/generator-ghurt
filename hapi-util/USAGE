@@ -1,0 +1,9 @@
+yo ghurt:hapi-util  [-force] [ -install | <http-verb> <path> ]
+
+Generator for hapi routes
+
+-install   use routes.js to generate all the routes
+-force     force the overwriting on all files
+
+http-verb  method used for the route (get, post, delete..)
+path       path of the route
