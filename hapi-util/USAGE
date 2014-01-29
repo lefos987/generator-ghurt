@@ -1,4 +1,4 @@
-yo ghurt:hapi-util  [-force] [ -install | <http-verb> <path> ]
+yo ghurt:hapi-util [-force] [ -install | <http-verb> <path> ]
 
 Generator for hapi routes
 

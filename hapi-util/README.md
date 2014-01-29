@@ -1,6 +1,6 @@
 # Hapi util
 
-Hapi routes generator. Via command, prompt or file.
+Hapi route generator. Via command, prompt or file.
 
 ## How it works?
 
@@ -57,23 +57,23 @@ For each route, there is:
 
  - **a handler** which treat the request and generate the response.
  - **a router** where the route settings are defined and the handler is linked
- - **the server** where all the routers are given to the server object
+ - **the server** where all routers are given to the server object
  
 Example: for the route `GET` `hello/world`
 
  - handler : `src/api/hello/getWorld/getWorld.js`
  - router : `src/api/hello/helloRoutes.js`
- - server : `server.js`
+ - server : `server.js` (and will always be server.js)
 
-The principle is to use the first chunk of the path as router name. The `srp/api/` folder is managed to have a subfolder for each router.
+The principle is to use the first chunk of the path as router name. The `src/api/` folder is managed to have a subfolder for each router.
 
 ## Command options
 
 ```
-yo ghurt:hapi-util  [-force] [ -install | <http-verb> <path> ]
+yo ghurt:hapi-util [-force] [ -install | <http-verb> <path> ]
 ```
 
- - `-install`   use routes.js to generate all the routes
- - `-force`     force the overwriting on all files
- - `http-verb`  method used for the route (get, post, delete..)
- - `path`       path of the route
+ - `-install` : use routes.js to generate all the routes
+ - `-force` : force the overwriting on all files
+ - `http-verb` : method used for the route (get, post, delete..)
+ - `path` : path of the route
