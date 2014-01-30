@@ -52,7 +52,7 @@ HapiGenerator.prototype._welcome =
  */
 HapiGenerator.prototype._runHapiUtil = function _runHapiUtil(args, cb) {
 	cb = cb || function () {};
-	this.invoke('capinnovation:hapi-util', {args: args}, function () {
+	this.invoke('ghurt:hapi-util', {args: args, options: {force: true}}, function () {
 		cb();
 	});
 };
