@@ -3,6 +3,18 @@
 
 var common = {
 	/**
+	 * checkRequired
+	 * validation method to check if the user provided an answer
+	 * to the prompt
+	 * 
+	 * @param	string			version		Value to test
+	 * @return	boolean/string
+	 */
+	checkRequired: function (opt) {
+		return (opt) ? true : 'This is required';
+	},
+
+	/**
 	 * checkVersion
 	 * validation method to check if the string given
 	 * in param is a valid number
@@ -38,18 +50,18 @@ var common = {
 	},
 
 	/**
-	 * checkRequired
+	 * checkAppName
 	 * validation method to check if a string is not empty
 	 * 
 	 * @param		string			opt		Value to test
 	 * @return	boolean/string
 	 */
-	checkRequired: function (opt) {
+	checkAppName: function (opt) {
 		if (/^[a-zA-Z0-9-_]+$/.test(opt)) {
 			return true;
 		}
 		else {
-			return 'This option is required';
+			return 'This is not a valid app name';
 		}
 	},
 
@@ -161,7 +173,7 @@ var common = {
 			type: 'input',
 			name: 'name',
 			message: 'What is the name of your application?',
-			validate: common.checkRequired
+			validate: common.checkAppName
 		}, {
 			type: 'input',
 			name: 'description',
