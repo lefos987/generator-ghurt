@@ -11,9 +11,9 @@
 	 * @returns {string} A new instance of this service.
 	 *
 	 */
-	.service('<%= tpl.objectName %>', function <%= tpl.objectName %>() {
+	.service('<%= tpl.objectName %>', [function <%= tpl.objectName %>() {
 		// AngularJS will instantiate a singleton by calling "new" on this function
 		this.someMethod = function () {
 			return 42;
 		};
-	})
+	}])

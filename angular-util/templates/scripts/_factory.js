@@ -11,7 +11,7 @@
 	 * @returns {string} A new instance of this factory.
 	 *
 	 */
-	.factory('<%= tpl.objectName %>', function () {
+	.factory('<%= tpl.objectName %>', [function () {
 		// Service logic
 		// ...
 
@@ -23,4 +23,4 @@
 				return meaningOfLife;
 			}
 		};
-	})
+	}])

@@ -30,8 +30,8 @@
 	     </doc:scenario>
 	   </doc:example>
 	 */
-	.filter('<%= tpl.objectName %>', function () {
+	.filter('<%= tpl.objectName %>', [function () {
 		return function (input) {
 			return '<%= tpl.objectName %> filter: ' + input;
 		};
-	})
+	}])

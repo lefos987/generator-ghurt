@@ -15,7 +15,7 @@
 	     </doc:source>
 	   </doc:example>
 	 */
-	.directive('<%= tpl.objectName %>', function () {
+	.directive('<%= tpl.objectName %>', [function () {
 		return {
 			template: '<div></div>',
 			restrict: 'E',
@@ -26,4 +26,4 @@
 				element.text('this is the <%= tpl.objectName %> directive');
 			}
 		};
-	})
+	}])
