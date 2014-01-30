@@ -45,6 +45,14 @@ $ yo ghurt:angular #for the angular subgenerator
 $ yo ghurt:hapi #for the hapijs subgenerator
 ```
 
+We also provide you with a set of tools to make your development in Angular and Hapi much easier.
+You can use a simple command to create all the boilerplate code for your Angular controllers, directives etc or set up a new Hapi route.
+
+For more details check the following files:
+
+- [Angular utilities](./angular-util/README.md)
+- [Hapi utilities](./hapi-util/README.md)
+
 ## Then..
 
 After providing any required information and configuration to the generator, it will install the required dependencies and you are ready to roll! 
