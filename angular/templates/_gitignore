@@ -8,3 +8,4 @@ dist/vendor/**/
 dist/*.*
 node_modules/
 src/styles/css/
+src/app/templates.js
