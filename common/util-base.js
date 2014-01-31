@@ -24,9 +24,10 @@ var utilBase = {
 	/**
 	 * File content caching system
 	 * ready to be saved
+	 * Need to be created in the init
 	 * @type {Object}
 	 */
-	fileCache: {},
+	fileCache: null,
 
 
 	/**

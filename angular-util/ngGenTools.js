@@ -112,6 +112,8 @@ var ngGenTools = {
 	 */
 	init: function (generator) {
 		this.generator = generator;
+		this.fileCache = {};
+		
 		this.checkCurrentPath();
 		this.setUpAttributes();
 
