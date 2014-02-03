@@ -1,1 +1,1 @@
-server.route(<%= tpl.action %>Routes);
+server.route(<%= tpl.ressource %>Routes);

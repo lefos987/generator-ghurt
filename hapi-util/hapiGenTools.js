@@ -148,8 +148,8 @@ var hapiGenTools = {
 	 * generate all the necessary variables to generate
 	 * the route
 	 * ex: GET /user/{userID}/likes/counter
-	 *  action: 'user',
-	 *  actionScript: 'user/userRoutes.js',
+	 *  ressource: 'user',
+	 *  ressourceScript: 'user/userRoutes.js',
 	 *  method: 'GET',
 	 *  route: '/user/{userID}/likes/counter'
 	 *  routeName: 'getLikesCounter', 
@@ -174,20 +174,20 @@ var hapiGenTools = {
 			if (route.indexOf('{') === -1) {
 				routeChunks.push('index');
 			}
-			else {
-				routeChunks.push((route.indexOf('?') === -1) ? 'item' : 'list');
-			}
+		}
+		if (route.indexOf('{') !== -1) {
+			routeChunks.push((route.indexOf('?') === -1) ? 'item' : 'collection');
 		}
 
 		// Templating
 		var routeName = method.toLowerCase();
-		for (var i = 1; i < routeChunks.length; i++) {
+		for (var i = 0; i < routeChunks.length; i++) {
 			routeName += common.capitalise(routeChunks[i]);
 		}
 
 		this.tpl = {
-			action: routeChunks[0],
-			actionScript: routeChunks[0] + '/' + routeChunks[0] + 'Routes.js',
+			ressource: routeChunks[0],
+			ressourceScript: routeChunks[0] + '/' + routeChunks[0] + 'Routes.js',
 			method: this.generator.method,
 			route: route,
 			routeName: routeName,
@@ -237,7 +237,7 @@ var hapiGenTools = {
 	 * write the view file
 	 */
 	writeRouter: function () {
-		var routerPath = this.scriptPath + this.tpl.actionScript;
+		var routerPath = this.scriptPath + this.tpl.ressourceScript;
 		if (this.checkFile(routerPath)) {
 			this.insert(routerPath, [
 				{tpl: 'router/_require', marker: 'require'},
