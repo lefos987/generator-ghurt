@@ -303,8 +303,8 @@ HapiGenerator.prototype.srcFolderInit = function srcFolderInit() {
 HapiGenerator.prototype.generateDemoObject = function generateDemoObject() {
 	if (!!this.basicInfo.quickInstall) {
 		var cb = this.async();
-		this._runHapiUtil(['GET', 'demo/foo'], function () {
-			this._runHapiUtil(['GET', 'demo/bar'], cb);
+		this._runHapiUtil(['GET', 'demo'], function () {
+			this._runHapiUtil(['GET', 'demo/{demoID}'], cb);
 		}.bind(this));
 	}
 	else {
