@@ -170,14 +170,7 @@ var hapiGenTools = {
 		if (routeChunks.length === 0) {
 			throw 'Your route is too tricky, sorry';
 		}
-		else if (routeChunks.length === 1) {
-			if (route.indexOf('{') === -1) {
-				routeChunks.push('index');
-			}
-		}
-		if (route.indexOf('{') !== -1) {
-			routeChunks.push((route.indexOf('?') === -1) ? 'item' : 'collection');
-		}
+		routeChunks.push((route.indexOf('{') !== -1) ? 'element' : 'collection');
 
 		// Templating
 		var routeName = method.toLowerCase();
@@ -314,7 +307,7 @@ var hapiGenTools = {
 	 */
 	checkRoute: function (route) {
 		route = route[0] === '/' ? route : '/' + route;
-		if (/^(\/([a-z0-9-_]+|\{([a-z][a-zA-Z0-9]*)\??\}))+$/.test(route)) {
+		if (/^(\/([a-z0-9-_]+|\{([a-z][a-zA-Z0-9]*)\}))+$/.test(route)) {
 			return true;
 		}
 		else {

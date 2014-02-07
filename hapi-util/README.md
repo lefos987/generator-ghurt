@@ -7,7 +7,7 @@ Hapi route generator. Via command, prompt or file.
 To create a route, the following parameters are required:
 
  - **Http verb**: method used for the new route : `*`, `GET`, `POST`, `DELETE`, `PUT`...
- - **Path**: automatically prefixed with `/app/`. The path can have param using the Hapi syntax, like `{yoghurtID}` to transform a part of the path as route parameter. To make it optional, a question mark can be used, like `{yoghurtID?}`.
+ - **Path**: automatically prefixed with `/app/`. The path can have param using the Hapi syntax, like `{yoghurtID}` to transform a part of the path as route parameter.
 
 To use the generator, three ways are possible.
 
@@ -36,7 +36,7 @@ module.exports = [
 	},
 	{
 		method: 'GET',
-		route: '/yoghurt/{id?}'
+		route: '/yoghurt/{id}'
 	},
 	{
 		method: 'POST',

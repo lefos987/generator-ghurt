@@ -1,11 +1,9 @@
 'use strict';
 
 var sinon = require('sinon');
-var rewire = require('rewire');
 var <%= tpl.routeName %> = require('../../../../src/api/<%= tpl.routePath %>');
 var logger = require('../../../../src/api/util/logger');
 var Hapi = require('Hapi');
-var Q = require('q');
 
 describe('<%= tpl.routeName %> controller', function () {
 
