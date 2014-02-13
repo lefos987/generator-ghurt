@@ -24,8 +24,8 @@ exports.config = {
 	seleniumArgs: [],
 
 	// If sauceUser and sauceKey are specified, seleniumServerJar will be ignored.
-	sauceUser: 'Innovation',
-	sauceKey: '8f2d03a7-fa70-4b33-9cee-fb98c9736a72',
+	sauceUser: '',
+	sauceKey: '',
 
 	// The address of a running selenium server.
 	seleniumAddress: 'http://localhost:4444/wd/hub',

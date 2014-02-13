@@ -3,5 +3,5 @@
 
 describe('<%= tpl.moduleName %> module', function () {
 
-	//mk:test
+	//ghurt-marker:test
 });

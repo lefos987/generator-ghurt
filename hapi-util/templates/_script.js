@@ -1,7 +1,7 @@
 'use strict';
 
 var logger = require('../../util/logger'),
-	Hapi = require('hapi');
+		Hapi = require('hapi');
 
 /**
  * <%= tpl.routeName %>

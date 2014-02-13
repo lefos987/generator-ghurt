@@ -9,5 +9,5 @@
  * [add a description]
  *
  */
-angular.module('<%= tpl.moduleName %>', []) //mk:module
+angular.module('<%= tpl.moduleName %>', []) //ghurt-marker:module
 ;

@@ -10,13 +10,11 @@ This generator has been built with Yeoman, to make your life easier and create a
 
 ## How is it built?
 
-As explained before, there are different frameworks available. So to keep the main generator as clear as possible, each framework got its own subgenerator. The master generator is only here to pick up the one you want and build your app.
+As explained before, there are different frameworks available. So to keep the main generator as clean as possible, each framework got its own subgenerator. The master generator is only here to pick up the one you want and build your app.
 
 Every subgenerator can be called separately, but by not using the main generator, some options will not be configured, like initializing a git repo to your directory or setting up git hooks for code quality.
 
-For further information, check the readme file in each subgenerator folder.
-
-## How to use it?
+## How to install it?
 
 This package is a Yeoman generator, so you will first need to install `yo` on your computer.
 
@@ -30,7 +28,9 @@ Then install generator-ghurt from npm, run:
 $ npm install -g generator-ghurt
 ```
 
-Finally, initiate the generator in the repo you want:
+## How to use it?
+
+In order to use the generator just create a new project directory and run the following command from this directory.
 
 ```
 $ yo ghurt
@@ -45,13 +45,31 @@ $ yo ghurt:angular #for the angular subgenerator
 $ yo ghurt:hapi #for the hapijs subgenerator
 ```
 
+For further information, check the README file in each subgenerator folder.
+- [Angular](./angular)
+- [Hapi](./hapi)
+
+## Additional Utilities
+
 We also provide you with a set of tools to make your development in Angular and Hapi much easier.
-You can use a simple command to create all the boilerplate code for your Angular controllers, directives etc or set up a new Hapi route.
+For example, you can use a simple command to create all the boilerplate code for your Angular controllers, directives etc or set up a new Hapi route.
 
-For more details check the following files:
+If you want to use our Angular utilities:
 
-- [Angular utilities](./angular-util/README.md)
-- [Hapi utilities](./hapi-util/README.md)
+```
+$ yo ghurt:angular-util
+```
+
+If you want to use our Hapi utilities:
+
+```
+$ yo ghurt:hapi-util
+```
+
+In order to see what these tools do for you we highly recommend to take a look at the README files: 
+
+- [Angular utilities](./angular-util)
+- [Hapi utilities](./hapi-util)
 
 ## Then..
 

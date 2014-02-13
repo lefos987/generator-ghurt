@@ -7,12 +7,12 @@ Hapi route generator. Via command, prompt or file.
 To create a route, the following parameters are required:
 
  - **Http verb**: method used for the new route : `*`, `GET`, `POST`, `DELETE`, `PUT`...
- - **Path**: automatically prefixed with `/app/`. The path can have param using the Hapi syntax, like `{yoghurtID}` to transform a part of the path as route parameter.
+ - **Path**: automatically prefixed with `/api/`. The path can have param using the Hapi syntax, like `{yoghurtID}` to transform a part of the path as route parameter.
 
 To use the generator, three ways are possible.
 
 #### Prompt
-Use the basic command to display a prompt which will help you to generate your route. The command will display a list of http verbs to chosse then will ask you to provide the path of your route.
+Use the basic command to display a prompt which will help you to generate your route. The command will display a list of http verbs to choose then will ask you to provide the path of your route.
 ```
 yo ghurt:hapi-util
 ```
@@ -24,7 +24,7 @@ yo ghurt:hapi-util get about/milk
 ```
 
 #### File
-This is experimental. The idea is to define all the API routes in a script called `routes.js` in the root folder, following the example structure. Then a simple command with the option `-install` will generate all your routes.
+**This is experimental.** The idea is to define all the API routes in a script called `routes.js` in the root folder, following the example structure. Then a simple command with the option `-install` will generate all your routes.
 ```js
 // routes.js
 'use strict';
@@ -46,7 +46,7 @@ module.exports = [
 ```
 Then run the generator
 ```
-yo ghurt:hapi-util -install
+yo ghurt:hapi-util -install --force
 ```
 
 When you define a route, feel free to begin the path with a `/` or not. The generator will format it.
@@ -55,7 +55,7 @@ When you define a route, feel free to begin the path with a `/` or not. The gene
 
 For each route, there is:
 
- - **a handler** which treat the request and generate the response.
+ - **a handler** which treats the request and generates the response.
  - **a router** where the route settings are defined and the handler is linked
  - **the server** where all routers are given to the server object
  

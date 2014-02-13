@@ -2,7 +2,7 @@
 
 // Load routes scripts
 var <%= tpl.routeName %> = require('./<%= tpl.routeName %>/<%= tpl.routeName %>');
-//mk:require
+//ghurt-marker:require
 
 // Define route config
 var <%= tpl.routeName %>Config = {
@@ -16,8 +16,8 @@ var <%= tpl.routeName %>Config = {
 		}<% } %>
 	}
 };
-//mk:conf
+//ghurt-marker:conf
 
 module.exports = [
-	<%= tpl.routeName %>Config //mk:export
+	<%= tpl.routeName %>Config //ghurt-marker:export
 ];

@@ -3,7 +3,7 @@
 var Hapi = require('hapi');
 var config = require('./config');
 var indexRoutes = require('./src/api/index/indexRoutes');
-//mk:require
+//ghurt-marker:require
 
 var options = {
 	cors: true,
@@ -20,7 +20,7 @@ var probe = new Flod.Probe(server, {server: 'hapi', version: '<%= npmDependencie
 <%}%>
 
 server.route(indexRoutes);
-//mk:route
+//ghurt-marker:route
 
 // Hook to provide index.html for any request
 server.ext('onPreResponse', function (request, reply) {

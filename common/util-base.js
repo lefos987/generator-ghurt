@@ -19,7 +19,7 @@ var utilBase = {
 	 * Prefix for template marker
 	 * @type {String}
 	 */
-	tplMarker: '//mk:',
+	tplMarker: '//ghurt-marker:',
 
 	/**
 	 * File content caching system

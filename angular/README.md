@@ -32,7 +32,7 @@ test/
 ```
 
 ### dist/
-Public folder of the app, where all your final html/js/css and assets will be, ready to be served. This folder contains subfolders:
+Public folder of the app, where all your final html/js/css and assets will live, ready to be served. This folder contains subfolders:
 
  - vendor: the bower folder, you can find the bower.json in it (all the bower dependencies will be installed here)
  - assets: where you can set your app assets (fonts, pictures, svg..)
@@ -51,12 +51,12 @@ Contains all the source files: scripts, templates and styles.
 
  - index.html: the index file of the app
  - app: all scripts and templates. Generaly subfolders are organised like the scripts modules.
- - styles: contain a subfolder called scss. This folder contain all scss files and compile them into an other folder called css (generated on the moment).
+ - styles: contain a subfolder called scss. This folder contain all scss files and compile them into a folder called css (generated on the moment).
 
 ### test/
 Contain all the necessary file for tests.
 
- - karma: karma config files
+ - config: karma and protractor config files
  - unit: unit test scripts. Generaly, we mirror the structure of src/app.
  - e2e: end-to-end test scripts
 
