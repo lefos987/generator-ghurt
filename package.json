@@ -1,6 +1,6 @@
 {
   "name": "generator-ghurt",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A Yeoman generator for AngularJS + HapiJS stack",
   "keywords": [
     "yeoman-generator",
