@@ -46,8 +46,8 @@ $ yo ghurt:hapi #for the hapijs subgenerator
 ```
 
 For further information, check the README file in each subgenerator folder.
-- [Angular](./angular)
-- [Hapi](./hapi)
+- [Angular](https://github.com/lefos987/generator-ghurt/tree/master/angular)
+- [Hapi](https://github.com/lefos987/generator-ghurt/tree/master/hapi)
 
 ## Additional Utilities
 
@@ -68,8 +68,8 @@ $ yo ghurt:hapi-util
 
 In order to see what these tools do for you we highly recommend to take a look at the README files: 
 
-- [Angular utilities](./angular-util)
-- [Hapi utilities](./hapi-util)
+- [Angular utilities](https://github.com/lefos987/generator-ghurt/tree/master/angular-util)
+- [Hapi utilities](https://github.com/lefos987/generator-ghurt/tree/master/hapi-util)
 
 ## Then..
 
