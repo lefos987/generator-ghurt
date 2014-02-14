@@ -38,7 +38,10 @@ module.exports = function (grunt) {
 		 */
 		clean: {
 			css: {
-				src: '<%= distDir %>/app.css'
+				src: [
+					'<%= distDir %>/*.css',
+					'<%= src.css %>'
+				]
 			},
 			compass: {
 				src: '.sass-cache'
@@ -47,7 +50,7 @@ module.exports = function (grunt) {
 				src: '<%= distDir %>/index.html'
 			},
 			js: {
-				src: '<%= distDir %>/app.js'
+				src: '<%= distDir %>/*.js'
 			},
 			other: {
 				src: ['docs', 'report']
@@ -279,11 +282,11 @@ module.exports = function (grunt) {
 			},
 			scss: {
 				files: ['<%= src.scss %>'],
-				tasks: ['compass:dev', 'clean:compass']
+				tasks: ['clean:css', 'compass:dev', 'clean:compass']
 			},
 			css: {
 				files: ['<%= src.css %>'],
-				tasks: ['clean:css', 'concat:css']
+				tasks: ['concat:css']
 			},
 			html: {
 				files: ['<%= src.html %>'],
