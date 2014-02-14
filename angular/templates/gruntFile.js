@@ -54,6 +54,53 @@ module.exports = function (grunt) {
 			}
 		},
 		/**
+		 * reduce
+		 * Delete any unnecessary files from dist folder
+		 * Also delete any generated directories (like coverage, .sass-cache)
+		 */
+		reduce: {
+      // Source folder
+      root: 'src', // Default: 'app',
+
+      // Build destination folder
+      outRoot: 'dist', // Default: 'dist',
+
+      // Root of your CDN. Optional
+      //cdnRoot: 'https://my.amazon.s3.bucket',
+
+      // minimatch patterns of files to include as base assets
+      // Dependencies of these will be automatically populated
+      // Paths are relative to reduce.root ('app')
+      include: [
+        '**/*.html',
+        '**/.htaccess',
+        '*.txt',
+        '*.ico'
+      ],
+
+      // Compile less files and remove less.js from application
+      less: false, // Default: true
+
+      // Run all available jpeg and png optimizations on images
+      // For maximum efficiency install jpegtran, optipng, pngcrush and pngquant
+      optimizeImages: true, // Default: true
+
+      // Create a cache manifest file
+      // If one already exists it will be ammended with static assets
+      manifest: true, // Default: false
+
+      // Set the 'async'-attribute on all script tags
+      asyncScripts: true, // Default: true
+
+      // Pretty print assets. Good for debugging
+      pretty: false, // Default: false
+
+      // Inline CSS backgrounds below this byte threshold as data-uris
+      // There will be an old IE fallback to the original image
+      // 0 disables.
+      inlineSize: 4096 // Default: 4096
+    },
+		/**
 		 * concat
 		 * Concatenate all js files into one and all css files into one.
 		 */
@@ -327,6 +374,7 @@ module.exports = function (grunt) {
 		'clean',
 		'compass',
 		'jshint',
+		'reduce'
 		'useminPrepare',
 		'html2js',
 		'concat',
