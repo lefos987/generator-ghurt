@@ -71,7 +71,7 @@ var generatorData = {
 			quickInstall: false
 		},
 		hapiDependencies: {
-			hapiVersion: 'latest',
+			hapiVersion: '~2.x',
 			hapiDepend: [
 				'catbox',
 				'joi'
