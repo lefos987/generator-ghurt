@@ -42,6 +42,7 @@
     "karma-ng-html2js-preprocessor": "~0.1.0",
     "karma-coverage": "~0.1.0",
     "load-grunt-tasks": "~0.2.0",
+    "time-grunt": "~0.3.1",
     "phantomas": "~0.11.1"
   },
   "engines": {

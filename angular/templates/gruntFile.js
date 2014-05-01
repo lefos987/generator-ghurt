@@ -3,6 +3,7 @@
 module.exports = function (grunt) {
 	// NPM module that loads all tasks of type grunt-
 	require('load-grunt-tasks')(grunt);
+	require('time-grunt')(grunt);
 	var pkg = grunt.file.readJSON('package.json');
 
 	grunt.initConfig({
