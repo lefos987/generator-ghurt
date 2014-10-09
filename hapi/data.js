@@ -3,14 +3,17 @@
 var generatorData = {
 
 	hapiDependencies: {
+		'bell' : {
+			moduleName: 'bell',
+			description: 'Third-party login plugin for hapi'
+		},
 		'catbox' : {
 			moduleName: 'catbox',
 			description: 'Multi-strategy object caching service'
 		},
-		'flod' : {
-			moduleName: 'flod',
-			description: 'A systematic toolchain for benchmarking and comparing Node.js web server ' +
-			'frameworks'
+		'hapi-auth-cookie' : {
+			moduleName: 'hapi-auth-cookie',
+			description: 'Cookie authentication plugin'
 		},
 		'joi' : {
 			moduleName: 'joi',
@@ -20,10 +23,6 @@ var generatorData = {
 			moduleName: 'shot',
 			description: 'Injects a fake HTTP request/response into a node HTTP server for simulating ' +
 			'server logic'
-		},
-		'travelogue' : {
-			moduleName: 'travelogue',
-			description: 'Passport.js integration for hapi'
 		},
 		'yar' : {
 			moduleName: 'yar',

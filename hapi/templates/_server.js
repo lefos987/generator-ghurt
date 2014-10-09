@@ -6,18 +6,10 @@ var indexRoutes = require('./src/api/index/indexRoutes');
 //ghurt-marker:require
 
 var options = {
-	cors: true,
-	cache: {
-		engine: 'redis',
-		partition: 'cm'
-	}
+	cors: true
 };
 
 var server = Hapi.createServer('0.0.0.0', config.port, options);
-<% if (!!npmDependencies.flod) {%>
-var Flod = require('flod');
-var probe = new Flod.Probe(server, {server: 'hapi', version: '<%= npmDependencies.hapi%>'});
-<%}%>
 
 server.route(indexRoutes);
 //ghurt-marker:route
