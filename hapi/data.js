@@ -11,10 +11,9 @@ var generatorData = {
 			moduleName: 'catbox',
 			description: 'Multi-strategy object caching service'
 		},
-		'flod' : {
-			moduleName: 'flod',
-			description: 'A systematic toolchain for benchmarking and comparing Node.js web server ' +
-			'frameworks'
+		'hapi-auth-cookie' : {
+			moduleName: 'hapi-auth-cookie',
+			description: 'Cookie authentication plugin'
 		},
 		'hapi-auth-cookie' : {
 			moduleName: 'hapi-auth-cookie',
